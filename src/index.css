@@ -40,6 +40,10 @@ body {
     color: #ff8c01;
     background-color: transparent;
   }
+  /* Custom swiper bullet bg */
+  .swiper-pagination-bullet {
+    background-color: #ff8c01 !important;
+  }
 }
 /* Light Theme */
 @plugin "daisyui/theme" {

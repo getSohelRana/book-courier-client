@@ -33,7 +33,7 @@ const Navbar = () => {
             {/* Hamburger */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="btn btn-ghost text-3xl lg:hidden sm:-ml-5"
+              className="btn btn-ghost text-3xl lg:hidden ml-3 sm:-ml-5"
             >
               {isOpen ? (
                 <RxCross2 className="text-red-600" />

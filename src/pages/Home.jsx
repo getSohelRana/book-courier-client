@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../components/shared/header/Navbar";
 import Container from "../components/shared/Container";
-
+import Carousel from "../components/home/Carousel";
 
 const Home = () => {
   return (
@@ -13,9 +13,10 @@ const Home = () => {
 
       {/* Main Content */}
       <main className="flex-1">
+        {/* Carousel */}
+          <Carousel></Carousel>
         <Container>
-          {/* Carousel */}
-         
+          
         </Container>
       </main>
 
