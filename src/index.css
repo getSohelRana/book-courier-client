@@ -1,0 +1,61 @@
+/* Google Font */
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
+
+/* Tailwind & DaisyUI */
+@import "tailwindcss";
+@plugin "daisyui";
+
+/* DaisyUI Global Config */
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark;
+}
+
+/* Base Styles */
+body {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Custom Utilities */
+@layer utilities {
+  /* ACTIVE NAVLINK*/
+  .active {
+    @apply relative text-primary transition-all duration-300;
+  }
+
+  .navbar .active,
+  .menu .active {
+    color: #ff8c01;
+  }
+
+  .navbar a,
+  .menu a {
+    font-size: 18px;
+    color: #dcdada;
+  }
+  .navbar a:hover,
+  .menu a:hover {
+    font-size: 18px;
+    color: #ff8c01;
+    background-color: transparent;
+  }
+}
+/* Light Theme */
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  --color-primary: #234c6a;
+  --color-secondary: #ff8c01;
+  --color-base-100: #f5f5f5;
+  --color-base-200: #456882;
+}
+
+/* Dark Theme */
+@plugin "daisyui/theme" {
+  name: "dark";
+  --color-primary: #456882;
+  --color-secondary: #ff8c01;
+  --color-base-100: #020617;
+  --color-base-200: #234c6a;
+}
