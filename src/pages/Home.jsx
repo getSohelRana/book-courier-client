@@ -1,7 +1,9 @@
 import React from "react";
 import Navbar from "../components/shared/header/Navbar";
 import Container from "../components/shared/Container";
-import Carousel from "../components/home/Carousel";
+import Carousel from "../components/home/carousel/Carousel";
+import CoverageMap from "../components/home/coverageMap/CoverageMap";
+
 
 const Home = () => {
   return (
@@ -16,7 +18,8 @@ const Home = () => {
         {/* Carousel */}
           <Carousel></Carousel>
         <Container>
-          
+          {/* coverage map */}
+          <CoverageMap></CoverageMap>
         </Container>
       </main>
 

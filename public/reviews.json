@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "name": "Rahim Uddin",
+    "role": "University Student",
+    "city": "Dhaka",
+    "rating": 5,
+    "comment": "BookCourier has made my study life much easier. I can borrow books from my nearby library without wasting time on travel.",
+    "photo_url": "https://i.ibb.co.com/C3McPHHd/student1.jpg",
+    "date": "2025-12-10"
+  },
+  {
+    "id": 2,
+    "name": "Nusrat Jahan",
+    "role": "Masters Student",
+    "city": "Rajshahi",
+    "rating": 4,
+    "comment": "Very helpful service for students. The pickup and return system is smooth and reliable.",
+    "photo_url": "https://i.ibb.co.com/ynC824y4/student2.jpg",
+    "date": "2025-12-18"
+  },
+  {
+    "id": 3,
+    "name": "Dr. Anisur Rahman",
+    "role": "Researcher",
+    "city": "Chattogram",
+    "rating": 5,
+    "comment": "As a researcher, accessing library books remotely saves a lot of time. BookCourier is a brilliant initiative.",
+    "photo_url": "https://i.ibb.co.com/TDxwHrgG/student3.jpg",
+    "date": "2026-01-02"
+  },
+  {
+    "id": 4,
+    "name": "Sadia Akter",
+    "role": "Book Lover",
+    "city": "Khulna",
+    "rating": 4,
+    "comment": "I love reading but visiting libraries frequently is difficult. BookCourier solved that problem for me.",
+    "photo_url": "https://i.ibb.co.com/j9JLK0vF/student9.jpg",
+    "date": "2026-01-04"
+  },
+  {
+    "id": 5,
+    "name": "Mahmud Hasan",
+    "role": "College Student",
+    "city": "Sylhet",
+    "rating": 5,
+    "comment": "Affordable, fast, and easy to use. Perfect for students who rely on library books.",
+    "photo_url": "https://i.ibb.co.com/hx0yNS50/student6.jpg",
+    "date": "2026-01-06"
+  },
+  {
+    "id": 6,
+    "name": "Farhana Islam",
+    "role": "Public Library Member",
+    "city": "Barishal",
+    "rating": 4,
+    "comment": "The delivery process is simple and well-organized. Returning books is also very convenient.",
+    "photo_url": "https://i.ibb.co.com/YFpgLQxZ/student12.jpg",
+    "date": "2026-01-08"
+  },
+  {
+    "id": 7,
+    "name": "Tareq Mahmud",
+    "role": "Job Seeker",
+    "city": "Gazipur",
+    "rating": 5,
+    "comment": "I use BookCourier for competitive exam books. It saves both time and money.",
+    "photo_url": "https://i.ibb.co.com/dJkmhB0g/student11.jpg",
+    "date": "2026-01-09"
+  },
+  {
+    "id": 8,
+    "name": "Shamima Sultana",
+    "role": "School Teacher",
+    "city": "Cumilla",
+    "rating": 4,
+    "comment": "Very useful platform for teachers and students. Hope to see more libraries added soon.",
+    "photo_url": "https://i.ibb.co.com/0VvwDVHJ/student19.jpg",
+    "date": "2026-01-10"
+  },
+  {
+    "id": 9,
+    "name": "Imran Hossain",
+    "role": "Engineering Student",
+    "city": "Mymensingh",
+    "rating": 5,
+    "comment": "The app is easy to use and delivery timing is reliable. Highly recommended for students.",
+    "photo_url": "https://i.ibb.co.com/nM0RsY0R/student16.jpg",
+    "date": "2026-01-11"
+  },
+  {
+    "id": 10,
+    "name": "Ayesha Khatun",
+    "role": "Research Assistant",
+    "city": "Rangpur",
+    "rating": 4,
+    "comment": "BookCourier helps me access reference books without visiting multiple libraries physically.",
+    "photo_url": "https://i.ibb.co.com/YFpgLQxZ/student12.jpg",
+    "date": "2026-01-12"
+  }
+]

@@ -44,6 +44,12 @@ body {
   .swiper-pagination-bullet {
     background-color: #ff8c01 !important;
   }
+  .heading_title{
+    @apply text-3xl sm:text-3xl md:text-4xl text-primary text-center font-bold
+  }
+  .heading_subtitle{
+    @apply text-sm md:text-xl text-center text-secondary
+  }
 }
 /* Light Theme */
 @plugin "daisyui/theme" {
