@@ -31,9 +31,9 @@ const Coverage = () => {
         </p>
       </div>
 
-      <div className="w-full h-full mt-10">
+      <div className="w-full h-full mt-15">
         <MapContainer
-          className="h-[700px]"
+          className="h-175"
           center={position}
           zoom={7}
           scrollWheelZoom={false}

@@ -3,6 +3,7 @@ import Navbar from "../components/shared/header/Navbar";
 import Container from "../components/shared/Container";
 import Carousel from "../components/home/carousel/Carousel";
 import CoverageMap from "../components/home/coverageMap/CoverageMap";
+import WhyChoose from "../components/home/whyChooseBookCourier/WhyChooseBookCourier";
 
 
 const Home = () => {
@@ -20,6 +21,8 @@ const Home = () => {
         <Container>
           {/* coverage map */}
           <CoverageMap></CoverageMap>
+          {/* whyChoose */}
+          <WhyChoose></WhyChoose>
         </Container>
       </main>
 

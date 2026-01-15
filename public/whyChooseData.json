@@ -1,0 +1,28 @@
+[
+  {
+    "id": 1,
+    "title": "Doorstep Book Delivery",
+    "description": "Request books from nearby libraries and get them delivered directly to your doorstep, saving time and effort.",
+    "icon": "https://i.ibb.co.com/3YrwMNqN/book-delivery.png"
+  },
+  {
+    "id": 2,
+    "title": "Multiple Libraries, One Platform",
+    "description": "Access books from multiple libraries through a single platform without the hassle of visiting each one.",
+    "icon": "https://i.ibb.co.com/GQYyy0hG/library.png"
+  },
+
+  {
+    "id": 3,
+    "title": "Save Time & Travel Cost",
+    "description": "Avoid unnecessary travel and long queues by managing your library books online from anywhere.",
+    "icon": "https://i.ibb.co.com/NgyqXYB5/clock.png"
+  },
+
+  {
+    "id": 4,
+    "title": "Trusted by Students & Readers",
+    "description": "A reliable library delivery system trusted by students, researchers, and book lovers for convenient access to books.",
+    "icon": "https://i.ibb.co.com/SwKws6K9/trust.png"
+  }
+]
