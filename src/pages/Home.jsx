@@ -4,6 +4,7 @@ import Container from "../components/shared/Container";
 import Carousel from "../components/home/carousel/Carousel";
 import CoverageMap from "../components/home/coverageMap/CoverageMap";
 import WhyChoose from "../components/home/whyChooseBookCourier/WhyChooseBookCourier";
+import Reviews from "../components/home/reviews/Reviews";
 
 
 const Home = () => {
@@ -23,6 +24,8 @@ const Home = () => {
           <CoverageMap></CoverageMap>
           {/* whyChoose */}
           <WhyChoose></WhyChoose>
+          {/* reviews */}
+          <Reviews></Reviews>
         </Container>
       </main>
 

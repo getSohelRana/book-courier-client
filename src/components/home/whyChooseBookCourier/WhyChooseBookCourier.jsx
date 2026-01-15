@@ -10,7 +10,7 @@ const WhyChooseBookCourier = () => {
   }, []);
 
   return (
-    <div className="px-4 py-10">
+    <div className="py-10">
       {/* Heading */}
       <div>
         <h1 className="heading_title">Why Choose Book Courier</h1>
