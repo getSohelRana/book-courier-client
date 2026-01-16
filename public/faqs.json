@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "question": "What is BookCourier?",
+    "answer": "BookCourier is a library delivery management system that allows users to request book pickup or delivery from nearby libraries without visiting them in person."
+  },
+  {
+    "id": 2,
+    "question": "Who can use BookCourier?",
+    "answer": "BookCourier is designed for students, researchers, and book lovers who want an easy way to borrow and return library books."
+  },
+  {
+    "id": 3,
+    "question": "How does BookCourier work?",
+    "answer": "Users search for books from nearby libraries, place a pickup or delivery request, and BookCourier handles the transportation between the user and the library."
+  },
+  {
+    "id": 4,
+    "question": "Do I need to visit the library to borrow books?",
+    "answer": "No. BookCourier allows you to borrow and return books without physically visiting the library."
+  },
+  {
+    "id": 5,
+    "question": "Can I return library books using BookCourier?",
+    "answer": "Yes. BookCourier supports both book pickup and return services for participating libraries."
+  },
+  {
+    "id": 6,
+    "question": "Which libraries are available on BookCourier?",
+    "answer": "BookCourier connects users with nearby partner libraries. Available libraries may vary based on your location."
+  },
+  {
+    "id": 7,
+    "question": "Is BookCourier suitable for students and researchers?",
+    "answer": "Yes. BookCourier is especially helpful for students and researchers who need frequent access to library books but have limited time to visit libraries."
+  },
+  {
+    "id": 8,
+    "question": "How long does book delivery usually take?",
+    "answer": "Delivery time depends on the library location and availability, but most requests are processed within a short time frame."
+  },
+  {
+    "id": 9,
+    "question": "Is BookCourier easy to use?",
+    "answer": "Yes. The system is designed to be simple and user-friendly, making it easy to request, receive, and return books."
+  },
+  {
+    "id": 10,
+    "question": "Does BookCourier save time compared to visiting a library?",
+    "answer": "Yes. By handling pickup and delivery, BookCourier saves users time, travel effort, and transportation costs."
+  }
+]

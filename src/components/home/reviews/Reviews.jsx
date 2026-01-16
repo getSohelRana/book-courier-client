@@ -20,7 +20,7 @@ const Reviews = () => {
   }, []);
 
   return (
-    <section className="py-16">
+    <section className="py-15 ">
       {/* Heading */}
       <div className="text-center mb-10">
         <h1 className="heading_title">What Clients Say</h1>
@@ -38,8 +38,7 @@ const Reviews = () => {
           pauseOnMouseEnter: true,
         }}
         breakpoints={{
-          640: { slidesPerView: 1 },
-          768: { slidesPerView: 2 },
+          640: { slidesPerView: 2 },
           1024: { slidesPerView: 3 },
         }}
         spaceBetween={24}
@@ -48,7 +47,13 @@ const Reviews = () => {
       >
         {reviews.map((review, id) => (
           <SwiperSlide key={id}>
-            <div className="relative bg-white rounded-2xl p-6 shadow-lg border border-base-200 flex flex-col h-full mt-15">
+            <div
+              className="relative bg-white rounded-2xl p-6 shadow-md flex 
+              flex-col min-h-80 md:min-h-87.5 
+              mt-15 mb-7 hover:border 
+              hover:border-primary 
+              transition-all duration-300"
+            >
               {/* Quote Icon */}
               <FaQuoteLeft className="text-primary text-3xl mb-4" />
 
