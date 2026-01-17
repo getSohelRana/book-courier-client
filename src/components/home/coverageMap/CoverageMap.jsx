@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import Loading from "../../shared/loading/Loading";
@@ -8,6 +8,7 @@ const Coverage = () => {
   const [cities, setCities] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const mapRef = useRef(null)
 
   useEffect(() => {
     fetch("/cities.json")
@@ -20,6 +21,22 @@ const Coverage = () => {
       .finally(() => setLoading(false));
   }, []);
 
+  // search location
+
+  const handleLocationSearch = (e) => {
+    e.preventDefault();
+    const location = e.target.location.value.trim();
+    // console.log(location)
+
+    const district = cities.find( c => c.district.toLowerCase().includes(location.toLowerCase()));
+    if(district){
+      const flyMap = [district.latitude, district.longitude];
+      // console.log(flyMap)
+      mapRef.current.flyTo(flyMap, 13)
+    }
+
+  }
+
   if (error) return <p>Error: {error}</p>;
 
   return (
@@ -30,11 +47,32 @@ const Coverage = () => {
           We currently deliver books to the following cities across Bangladesh.
         </p>
       </div>
+      {/* search location */}
+      <form onSubmit={handleLocationSearch} className="flex gap-1 sm:gap-2 mt-10 justify-center items-center">
+        <label className="input mr-2 w-70 sm:w-80 md:w-120">
+          <svg
+            className="h-[1em] opacity-50"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+          >
+            <g
+              strokeLinejoin="round"
+              strokeLinecap="round"
+              strokeWidth="2.5"
+              fill="none"
+              stroke="currentColor"
+            >
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.3-4.3"></path>
+            </g>
+          </svg>
+          <input type="search" name="location" required placeholder="Search your delivery location"  />
+        </label>
+        <button className="btn btn-secondary">Seacrch</button>
+      </form>
 
       {/* ===== Loading ===== */}
-      {loading && (
-        <Loading></Loading>
-      )}
+      {loading && <Loading></Loading>}
 
       <div className="w-full h-full mt-15">
         <MapContainer
@@ -42,6 +80,7 @@ const Coverage = () => {
           center={position}
           zoom={7}
           scrollWheelZoom={false}
+          ref = {mapRef}
         >
           <TileLayer
             attribution="&copy; OpenStreetMap contributors"

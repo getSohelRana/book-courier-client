@@ -1,10 +1,13 @@
 import React from 'react';
-import { Outlet } from 'react-router';
+import { Outlet, useNavigation } from 'react-router';
+import Loading from '../components/shared/loading/Loading';
 
 const MainLayouts = () => {
+  const {state} = useNavigation();
   return (
     <div>
-      <Outlet></Outlet>
+      {state === "loading" ? <Loading></Loading> : <Outlet></Outlet>}
+      
     </div>
   );
 };
