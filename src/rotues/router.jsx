@@ -5,6 +5,7 @@ import Home from "../pages/Home";
 import MainLayouts from "../mainLayouts/mainLayouts";
 import AllBooks from "../pages/AllBooks";
 import ErrorPage from "../pages/ErrorPage";
+import ErrorState from "../components/shared/ErrorState";
 
 const router = createBrowserRouter([
   {
@@ -18,8 +19,18 @@ const router = createBrowserRouter([
       },
       {
         path: "/all-books",
-        element: <AllBooks></AllBooks>
-      }
+        element: <AllBooks></AllBooks>,
+        errorElement: (
+          <ErrorState
+            config={{
+              title: "Unable to load books",
+              message: "Please check your internet connection and try again.",
+              showRetry: true,
+              showHome: false,
+            }}
+          />
+        ),
+      },
     ],
   },
 ]);
