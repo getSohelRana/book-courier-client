@@ -6,9 +6,11 @@ import { FaQuoteLeft, FaStar } from "react-icons/fa";
 // Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
+import Loading from "../../shared/loading/Loading";
 
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch("/reviews.json")
@@ -16,7 +18,8 @@ const Reviews = () => {
       .then((data) => {
         console.log(data);
         setReviews(data);
-      });
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   return (
@@ -28,6 +31,9 @@ const Reviews = () => {
           Real experiences from readers who trust, use and love our service.
         </p>
       </div>
+
+      {/* ===== Loading ===== */}
+      {loading && <Loading></Loading>}
 
       {/* Slider */}
       <Swiper
