@@ -34,7 +34,7 @@ const Coverage = () => {
       // console.log(flyMap)
       mapRef.current.flyTo(flyMap, 13)
     }
-
+    e.target.reset();
   }
 
   if (error) return <p>Error: {error}</p>;

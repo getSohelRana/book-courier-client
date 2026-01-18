@@ -7,35 +7,21 @@ import WhyChoose from "../components/home/whyChooseBookCourier/WhyChooseBookCour
 import Reviews from "../components/home/reviews/Reviews";
 import Faq from "../components/home/faq/Faq";
 
-
 const Home = () => {
   return (
-    <div className="flex min-h-screen flex-col">
-      {/* Navbar */}
-      <header>
-        <Navbar />
-      </header>
-
-      {/* Main Content */}
-      <main className="flex-1">
-        {/* Carousel */}
-          <Carousel></Carousel>
-        <Container>
-          {/* coverage map */}
-          <CoverageMap></CoverageMap>
-          {/* whyChoose */}
-          <WhyChoose></WhyChoose>
-          {/* reviews */}
-          <Reviews></Reviews>
-          {/* Frequently Asked Questions */}
-          <Faq></Faq>
-        </Container>
-      </main>
-
-      {/* Footer */}
-      <footer>
-        
-      </footer>
+    <div>
+      {/* Carousel */}
+      <Carousel></Carousel>
+      <Container>
+        {/* coverage map */}
+        <CoverageMap></CoverageMap>
+        {/* whyChoose */}
+        <WhyChoose></WhyChoose>
+        {/* reviews */}
+        <Reviews></Reviews>
+        {/* Frequently Asked Questions */}
+        <Faq></Faq>
+      </Container>
     </div>
   );
 };
