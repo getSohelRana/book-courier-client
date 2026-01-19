@@ -6,6 +6,9 @@ import MainLayouts from "../mainLayouts/mainLayouts";
 import AllBooks from "../pages/AllBooks";
 import ErrorPage from "../pages/ErrorPage";
 import ErrorState from "../components/shared/ErrorState";
+import AuthLayouts from "../authLayouts/AuthLayouts";
+import SignUp from "../pages/form/signUp/SignUp";
+import SignIn from "../pages/form/signIn/SignIn";
 
 const router = createBrowserRouter([
   {
@@ -18,7 +21,7 @@ const router = createBrowserRouter([
         element: <Home></Home>,
       },
       {
-        path: "/all-books",
+        path: "all-books",
         element: <AllBooks></AllBooks>,
         errorElement: (
           <ErrorState
@@ -33,5 +36,20 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path : "/auth",
+    element : <AuthLayouts></AuthLayouts>,
+    errorElement: <ErrorPage></ErrorPage>,
+    children : [
+      {
+        path : "signup",
+        element : <SignUp></SignUp>
+      },
+      {
+        path : "login",
+        element: <SignIn></SignIn>
+      }
+    ]
+  }
 ]);
 export default router;

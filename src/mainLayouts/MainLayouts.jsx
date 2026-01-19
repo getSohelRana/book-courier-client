@@ -12,7 +12,7 @@ const MainLayouts = () => {
         <Navbar />
       </header>
       {/* Main Content */}
-      <main>
+      <main className="flex-1">
         {state === "loading" ? <Loading></Loading> : <Outlet></Outlet>}
       </main>
 
