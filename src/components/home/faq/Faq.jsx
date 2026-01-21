@@ -22,12 +22,12 @@ const Faq = () => {
 
       <div className="max-w-6xl mx-auto mt-15 space-y-3">
         {faqs.map((faq, idx) => (
-          <div key={idx} className="collapse collapse-plus bg-white border border-base-200">
+          <div key={idx} className="collapse collapse-plus bg-base-300 border border-base-200">
             <input type="radio" name="my-accordion-3" defaultChecked={idx === 0} />
             <div className="collapse-title font-semibold text-primary">
               {faq.question}
             </div>
-            <div className="collapse-content text-sm">
+            <div className="collapse-content text-sm text-secondary/90">
               {faq.answer}
             </div>
           </div>

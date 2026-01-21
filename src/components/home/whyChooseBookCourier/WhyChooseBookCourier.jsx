@@ -24,7 +24,7 @@ const WhyChooseBookCourier = () => {
         {contents.map((content, id) => (
           <div
             key={id}
-            className="card  bg-white shadow-lg rounded-lg overflow-hidden flex flex-col "
+            className="card  bg-base-300 shadow-lg rounded-lg overflow-hidden flex flex-col "
           >
             {/* Image */}
             <figure className="flex justify-center mt-4">

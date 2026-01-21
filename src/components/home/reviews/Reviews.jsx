@@ -54,7 +54,7 @@ const Reviews = () => {
         {reviews.map((review, id) => (
           <SwiperSlide key={id}>
             <div
-              className="relative bg-white rounded-2xl p-6 shadow-md flex 
+              className="relative bg-base-300 rounded-2xl p-6 shadow-md flex 
               flex-col min-h-80 md:min-h-87.5 
               mt-15 mb-7 hover:border 
               hover:border-primary 
@@ -64,7 +64,7 @@ const Reviews = () => {
               <FaQuoteLeft className="text-primary text-3xl mb-4" />
 
               {/* Comment */}
-              <p className="text-base-content/80 leading-relaxed mb-6">
+              <p className="text-primary leading-relaxed mb-6">
                 {review.comment}
               </p>
 
@@ -78,21 +78,21 @@ const Reviews = () => {
 
                 <div className="">
                   <h4 className="font-semibold text-primary">{review.name}</h4>
-                  <p className="text-sm text-base-content/60">
+                  <p className="text-sm text-base-200">
                     {review.role} , {review.city}
                   </p>
 
                   {/* Rating */}
                   <div className="flex items-center gap-1 mt-1">
                     {[...Array(review.rating)].map((_, i) => (
-                      <FaStar key={i} className="text-yellow-400 text-sm" />
+                      <FaStar key={i} className="text-yellow-300 text-sm" />
                     ))}
                   </div>
                 </div>
               </div>
 
               {/* Date */}
-              <span className="absolute top-6 right-6 text-xs text-base-content/40">
+              <span className="absolute top-6 right-6 text-xs text-base-200">
                 {review.date}
               </span>
             </div>
