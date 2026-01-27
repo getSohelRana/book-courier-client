@@ -3,13 +3,14 @@ import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
 import { Link, useLocation, useNavigate } from "react-router";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
+import GoogleLogIn from "../socialLogIn/GoogleLogIn";
 
 const SignIn = () => {
   const { loading, setLoading, signInUser } = useAuth();
   const [togglePassword, setTogglePassword] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const redirectTo = location.state?.form?.pathname || "/";
+  const redirectTo = location.state?.from?.pathname || "/";
   const {
     register,
     handleSubmit,
@@ -23,7 +24,7 @@ const SignIn = () => {
       const user = res.user;
       console.log(user)
       reset()
-      navigate(redirectTo);
+      navigate(redirectTo, {replace : true});
     }catch (error){
       const errorMessages = {
         "auth/wrong-password": "Incorrect password",
@@ -120,15 +121,8 @@ const SignIn = () => {
       </p>
 
       <div className="divider">or</div>
-
-      <button className="btn w-full mx-auto mt-3 bg-base-200">
-        <img
-          src="https://www.svgrepo.com/show/475656/google-color.svg"
-          alt="google"
-          className="w-5"
-        />
-        Sign in with Google
-      </button>
+      {/* social log in */}
+      <GoogleLogIn></GoogleLogIn>
     </div>
   );
 };

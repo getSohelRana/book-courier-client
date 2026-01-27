@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../../hooks/useAuth";
+import GoogleLogIn from "../socialLogIn/GoogleLogIn";
 
 const SignUp = () => {
   const [togglePassword, setTogglePassword] = useState(false);
@@ -14,7 +15,7 @@ const SignUp = () => {
     register,
     handleSubmit,
     formState: { errors, dirtyFields },
-    reset
+    reset,
   } = useForm({ mode: "onChange" });
 
   const handleSignUp = async (data) => {
@@ -25,7 +26,7 @@ const SignUp = () => {
       console.log("User created:", res.user);
       // reset form
       reset();
-      navigate(redirectTo);
+      navigate(redirectTo , {replace : true});
     } catch (error) {
       const errorMessages = {
         "auth/email-already-in-use":
@@ -148,7 +149,7 @@ const SignUp = () => {
             </p>
           )}
           <button className="btn  bg-secondary mt-3 w-full" type="submit">
-             {loading ? "Creating account..." : "Sign Up"}
+            {loading ? "Creating account..." : "Sign Up"}
           </button>
         </fieldset>
       </form>
@@ -162,17 +163,9 @@ const SignUp = () => {
           Sign In
         </Link>
       </p>
-
       <div className="divider">or</div>
-
-      <button className="btn w-full mx-auto mt-3 bg-base-200">
-        <img
-          src="https://www.svgrepo.com/show/475656/google-color.svg"
-          alt="google"
-          className="w-5"
-        />
-        Sign up with Google
-      </button>
+      {/* social log in */}
+      <GoogleLogIn></GoogleLogIn>
     </div>
   );
 };
