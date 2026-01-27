@@ -19,13 +19,13 @@ const AuthLayouts = () => {
         <TopNav />
       </header>
 
-      <main className="min-h-[calc(100vh-80px)] flex items-center">
+      <main className="min-h-[calc(100vh-160px)] flex items-center justify-center my-10">
         <Container>
           {navigation.state === "loading" ? (
             <Loading />
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 ">
-              <div className="">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 justify-center items-center">
+              <div className="shadow py-10 px-3 bg-base-300 rounded-xl">
                 <Outlet />
               </div>
               <div>
