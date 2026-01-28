@@ -4,6 +4,8 @@ import useAuth from "../../../hooks/useAuth";
 import { Link, useLocation, useNavigate } from "react-router";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import GoogleLogIn from "../socialLogIn/GoogleLogIn";
+import showToast from "../../../utilities/showToast/showToast";
+import LoadingDots from "../../../components/shared/loading/LoadingDots";
 
 const SignIn = () => {
   const { loading, setLoading, signInUser } = useAuth();
@@ -18,24 +20,31 @@ const SignIn = () => {
     reset,
   } = useForm({ mode: "onChange" });
   const handleSignIn = async (data) => {
-    setLoading(true)
-    try{
-      const res = await signInUser(data.email , data.password);
+    setLoading(true);
+    try {
+      const res = await signInUser(data.email, data.password);
       const user = res.user;
-      console.log(user)
-      reset()
-      navigate(redirectTo, {replace : true});
-    }catch (error){
+      // console.log(user)
+      // show toast
+      showToast(
+        "success",
+        `Login successfully done, ${user.displayName || "User"}!`,
+      );
+      // reset from data
+      reset();
+      navigate(redirectTo, { replace: true }); // redirect
+    } catch (error) {
       const errorMessages = {
         "auth/wrong-password": "Incorrect password",
         "auth/user-not-found": "No account found with this email",
         "auth/invalid-credential": "Invalid email or password",
       };
-      const message = errorMessages[error.code] ||"Login failed. Try again";
-      console.log(message)
 
-    }finally{
-      setLoading(false)
+      const message = errorMessages[error.code] || "Login failed. Try again";
+      showToast("error", `${message}`);
+      // console.log(message)
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -105,7 +114,11 @@ const SignIn = () => {
           </div>
 
           <button className="btn  bg-secondary mt-3 w-full" type="submit">
-            {loading ? "Login..." : "Sign In"}
+            {loading ? (
+              <LoadingDots></LoadingDots>
+            ) : (
+              "Sign In"
+            )}
           </button>
         </fieldset>
       </form>

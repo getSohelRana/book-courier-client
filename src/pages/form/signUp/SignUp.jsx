@@ -4,6 +4,8 @@ import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../../hooks/useAuth";
 import GoogleLogIn from "../socialLogIn/GoogleLogIn";
+import showToast from "../../../utilities/showToast/showToast";
+import LoadingDots from "../../../components/shared/loading/LoadingDots";
 
 const SignUp = () => {
   const [togglePassword, setTogglePassword] = useState(false);
@@ -23,7 +25,12 @@ const SignUp = () => {
 
     try {
       const res = await createUser(data.email, data.password);
-      console.log("User created:", res.user);
+      const user = res.user
+      // console.log("User created:", user);
+       showToast(
+        "success",
+        `Account create successfully done, ${user.displayName || "User"}!`,
+      );
       // reset form
       reset();
       navigate(redirectTo , {replace : true});
@@ -40,8 +47,8 @@ const SignUp = () => {
         errorMessages[error.code] ||
         "Something went wrong. Please try again later.";
 
-      console.log(message);
-      // toast.error(message);
+      // console.log(message);
+      showToast("error", `${message}`);
     } finally {
       setLoading(false);
     }
@@ -149,7 +156,7 @@ const SignUp = () => {
             </p>
           )}
           <button className="btn  bg-secondary mt-3 w-full" type="submit">
-            {loading ? "Creating account..." : "Sign Up"}
+            {loading ? <LoadingDots></LoadingDots> : "Sign Up"}
           </button>
         </fieldset>
       </form>
