@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { auth } from "../../firebase/firebase.config";
 import { AuthContext } from "../authContext/AuthContext";
 import { GoogleAuthProvider } from "firebase/auth";
-import { signInWithCredential } from "firebase/auth/web-extension";
+
 // google provider
 const googleProvider = new GoogleAuthProvider();
 const AuthProvider = ({ children }) => {
@@ -24,7 +24,7 @@ const AuthProvider = ({ children }) => {
   // sign out users
   const signOutUser = () => {
     setLoading(true)
-    return signOut()
+    return signOut(auth)
   }
   // sign in with google
   const loginWithGoogle = () => {

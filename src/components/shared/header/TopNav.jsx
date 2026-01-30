@@ -30,8 +30,16 @@ const TopNav = () => {
               +1-555-555-5555
             </Link>
 
-            {isLogInPage && <Link to="/auth/signup" className="btn btn-outline">Sign Up</Link>}
-            {isSignUpPage && <Link to="/auth/login" className="btn btn-outline">Log In</Link>}
+            {isLogInPage && (
+              <Link to="/auth/signup" className="btn btn-dash btn-secondary font-normal">
+                Sign Up
+              </Link>
+            )}
+            {isSignUpPage && (
+              <Link to="/auth/login" className="btn btn-dash btn-secondary font-normal">
+                Log In
+              </Link>
+            )}
           </div>
         </div>
       </Container>

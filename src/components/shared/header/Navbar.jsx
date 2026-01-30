@@ -4,8 +4,17 @@ import { Link, NavLink } from "react-router";
 import siteLogo from "../../../assets/book_qourier_logo2.png";
 import { RxCross2, RxHamburgerMenu } from "react-icons/rx";
 import ThemeSwitcher from "../../../providers/ThemeSwitcher";
+import useAuth from "../../../hooks/useAuth";
+import userIcon from "../../../assets/user.png";
+import { PiUser } from "react-icons/pi";
+import { IoSettingsOutline } from "react-icons/io5";
+import { MdOutlineNotificationsActive } from "react-icons/md";
+import { LiaSignOutAltSolid } from "react-icons/lia";
+import showToast from "../../../utilities/showToast/showToast";
 
 const Navbar = () => {
+  const { user, signOutUser, setLoading } = useAuth();
+  // console.log(user);
   const [isOpen, setIsOpen] = useState(false);
 
   const closeMenu = () => setIsOpen(false);
@@ -25,8 +34,23 @@ const Navbar = () => {
     </>
   );
 
+  const handleSignOut = async () => {
+    const userName = user?.displayName || "User";
+    setLoading(true);
+
+    try {
+      await signOutUser();
+      showToast("success", `${userName} logged out successfully`);
+    } catch (error) {
+      console.error(error);
+      showToast("error", "Failed to log out");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="bg-primary relative overflow-hidden">
+    <div className="bg-primary relative">
       <Container>
         <div className="navbar justify-between ">
           <div className="navbar-start -ml-8 sm:ml-2">
@@ -68,7 +92,66 @@ const Navbar = () => {
           <div className="navbar-end gap-2">
             {/* ThemeSwitcher  */}
             <ThemeSwitcher></ThemeSwitcher>
-            <a className="">Button</a>
+            {/* current user profile */}
+            {user ? (
+              <>
+                <div className="dropdown dropdown-bottom dropdown-left">
+                  <div
+                    tabIndex={0}
+                    role="button"
+                    className="m-1 border-2 border-primary rounded-full"
+                  >
+                    <img
+                      className="w-10 h-10 object-cover rounded-full border-2 border-base-200"
+                      src={user?.photoURL || userIcon}
+                      alt="user_icon"
+                    />
+                  </div>
+                  <ul
+                    tabIndex="-1"
+                    className="dropdown-content menu bg-base-200 rounded-box z-50 w-35 lg:w-62 p-2 shadow-sm gap-2 space-y-2 "
+                  >
+                    <li>
+                      <Link to="" className="flex gap-2 items-center ">
+                        <PiUser></PiUser> My profile
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="" className="flex gap-2 items-center ">
+                        <IoSettingsOutline /> Settings
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="" className="flex gap-2 items-center">
+                        <MdOutlineNotificationsActive /> Notifications
+                      </Link>
+                    </li>
+                    <li>
+                      <button
+                        type="button"
+                        onClick={handleSignOut}
+                        className="bg-error text-white w-full flex gap-2 text-lg px-0"
+                      >
+                        <LiaSignOutAltSolid size={19} /> Sign Out
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </>
+            ) : (
+              <>
+                <ul className="flex">
+                  <li>
+                    <Link
+                      to="/auth/signup"
+                      className="btn btn-dash btn-secondary font-normal"
+                    >
+                      Sign Up
+                    </Link>
+                  </li>
+                </ul>
+              </>
+            )}
           </div>
         </div>
       </Container>
