@@ -5,18 +5,20 @@ import showToast from "../../../utilities/showToast/showToast";
 
 const GoogleLogIn = () => {
   const { loginWithGoogle, loading, setLoading } = useAuth();
-	const location = useLocation();
-	const navigate = useNavigate();
-	const redirectTo = location.state?.from?.pathname || "/";
+  const location = useLocation();
+  const navigate = useNavigate();
+  const redirectTo = location.state?.from?.pathname || "/";
+  // const isLogInPage = location.pathname === "/auth/login";
+  const isSignUpPage = location.pathname === "/auth/signup";
   const handleGoogleLogin = async () => {
     setLoading(true);
     try {
       const res = await loginWithGoogle();
       const user = res.user;
       // console.log(user);
-      showToast('success' , `Welcome, ${user.displayName || "User"}!`)
+      showToast("success", `Welcome, ${user.displayName || "User"}!`);
 
-			navigate(redirectTo , {replace : true})
+      navigate(redirectTo, { replace: true });
     } catch (error) {
       const errorMessages = {
         "auth/popup-closed-by-user": "Popup closed before completing sign in",
@@ -25,7 +27,7 @@ const GoogleLogIn = () => {
       };
       const message = errorMessages[error.code] || "Login failed. Try again";
       // console.log(message);
-      showToast('error' , `${message}`)
+      showToast("error", `${message}`);
     } finally {
       setLoading(false);
     }
@@ -33,8 +35,8 @@ const GoogleLogIn = () => {
   return (
     <div>
       <button
-			type="button"
-       disabled={loading}
+        type="button"
+        disabled={loading}
         className="btn w-full mx-auto mt-3 bg-base-200"
         onClick={handleGoogleLogin}
       >
@@ -43,7 +45,7 @@ const GoogleLogIn = () => {
           alt="google"
           className="w-5"
         />
-        Sign up with Google
+        {isSignUpPage ? "Sign up with Google" : "Continue with Google"}
       </button>
     </div>
   );
