@@ -9,6 +9,7 @@ import ErrorState from "../components/shared/ErrorState";
 import AuthLayouts from "../authLayouts/AuthLayouts";
 import SignUp from "../pages/form/signUp/SignUp";
 import SignIn from "../pages/form/signIn/SignIn";
+import PublicRoute from "./PublicRoute";
 
 const router = createBrowserRouter([
   {
@@ -37,19 +38,27 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path : "/auth",
-    element : <AuthLayouts></AuthLayouts>,
+    path: "/auth",
+    element: <AuthLayouts></AuthLayouts>,
     errorElement: <ErrorPage></ErrorPage>,
-    children : [
+    children: [
       {
-        path : "signup",
-        element : <SignUp></SignUp>
+        path: "signup",
+        element: (
+          <PublicRoute>
+            <SignUp></SignUp>
+          </PublicRoute>
+        ),
       },
       {
-        path : "login",
-        element: <SignIn></SignIn>
-      }
-    ]
-  }
+        path: "login",
+        element: (
+          <PublicRoute>
+            <SignIn></SignIn>
+          </PublicRoute>
+        ),
+      },
+    ],
+  },
 ]);
 export default router;
