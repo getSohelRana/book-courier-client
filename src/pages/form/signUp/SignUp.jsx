@@ -6,10 +6,11 @@ import useAuth from "../../../hooks/useAuth";
 import GoogleLogIn from "../socialLogIn/GoogleLogIn";
 import showToast from "../../../utilities/showToast/showToast";
 import LoadingDots from "../../../components/shared/loading/LoadingDots";
+import axios from "axios";
 
 const SignUp = () => {
   const [togglePassword, setTogglePassword] = useState(false);
-  const { createUser, loading, setLoading } = useAuth();
+  const { createUser, loading, setLoading, updateUserProfile } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const redirectTo = location.state?.from?.pathname || "/";
@@ -24,16 +25,39 @@ const SignUp = () => {
     setLoading(true);
 
     try {
+      const profileImg = data.profileImg[0];
+      // console.log(profileImg)
+
+      // prepare form data for imgBB
+      const formData = new FormData();
+      formData.append("image", profileImg);
+
+      // img upload to imgBB
+      const img_api_url = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_img_host_key}`;
+      const imgRes = await axios.post(img_api_url, formData);
+      const photoURL = imgRes.data.data.url;
+      // console.log("after img upload", photoURL);
+
+      // create new user
       const res = await createUser(data.email, data.password);
-      const user = res.user
+      const user = res.user;
       // console.log("User created:", user);
-       showToast(
+
+      // update firebase user profile
+      const userProfile = {
+        displayName: data.name,
+        photoURL,
+      };
+      await updateUserProfile(userProfile);
+
+      //success toast
+      showToast(
         "success",
-        `Account create successfully done, ${user.displayName || "User"}!`,
+        `Welcome, ${data.name} Your account has been created successfully!`,
       );
-      // reset form
+      // Reset & redirect
       reset();
-      navigate(redirectTo , {replace : true});
+      navigate(redirectTo, { replace: true });
     } catch (error) {
       const errorMessages = {
         "auth/email-already-in-use":
@@ -119,7 +143,7 @@ const SignUp = () => {
               `}
               placeholder="Password"
               {...register("password", {
-                required: "Password id required",
+                required: "Password is required",
                 pattern: {
                   value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).+$/,
                   message:
@@ -146,11 +170,11 @@ const SignUp = () => {
           <label className="label">Profile image</label> <br />
           <input
             type="file"
-            name="photoImg" // should match the register name
+            name="profileImg" // should match the register name
             className="file-input file-input-primary w-full"
-            {...register("photoImg", { required: true })}
+            {...register("profileImg", { required: true })}
           />
-          {errors.photoImg?.type === "required" && (
+          {errors.profileImg?.type === "required" && (
             <p className="text-red-400 text-sm mt-1">
               Please upload your profile image
             </p>
