@@ -7,8 +7,10 @@ import GoogleLogIn from "../socialLogIn/GoogleLogIn";
 import showToast from "../../../utilities/showToast/showToast";
 import LoadingDots from "../../../components/shared/loading/LoadingDots";
 import axios from "axios";
+import useSaveUser from "../../../hooks/useSaveUser";
 
 const SignUp = () => {
+  const {saveUserToDB} = useSaveUser()
   const [togglePassword, setTogglePassword] = useState(false);
   const { createUser, loading, setLoading, updateUserProfile } = useAuth();
   const location = useLocation();
@@ -50,15 +52,28 @@ const SignUp = () => {
       };
       await updateUserProfile(userProfile);
 
+      // save user DB
+     const result = await saveUserToDB({
+       name: data.name,
+       email: data.email,
+       photoURL,
+     });
       //success toast
-      showToast(
-        "success",
-        `Welcome, ${data.name} Your account has been created successfully!`,
-      );
+     if (result?.insertedId) {
+       showToast(
+         "success",
+         `Welcome, ${data.name}! Your account has been created successfully 🎉`,
+       );
+     }
+
       // Reset & redirect
       reset();
       navigate(redirectTo, { replace: true });
     } catch (error) {
+        if (axios.isAxiosError(error)) {
+          showToast("error", error.response?.data?.message || "Server error");
+          return;
+        }
       const errorMessages = {
         "auth/email-already-in-use":
           "This email is already registered. Please log in instead.",
