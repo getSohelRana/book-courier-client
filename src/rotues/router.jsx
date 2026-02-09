@@ -18,8 +18,12 @@ import LibrarianRoute from "./LibrarianRoute";
 import MyBooks from "../pages/dashboard/librarian/myBooks/MyBooks";
 import MyOrders from "../pages/dashboard/librarian/myOrders/MyOrders";
 import AddBook from "../pages/dashboard/librarian/addBooks/AddBook";
+import UserRoute from "./UserRoute";
+import UserOrder from "../pages/dashboard/user/userOrder/UserOrder";
+import Invoices from "../pages/dashboard/user/invoices/invoices";
+import UserProfile from "../pages/dashboard/user/userProfile/userProfile";
 
-const router = createBrowserRouter([
+const Router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayouts />,
@@ -90,9 +94,18 @@ const router = createBrowserRouter([
           { path: "my-orders", element: <MyOrders /> },
         ],
       },
+      {
+        path : 'user',
+        element: <UserRoute></UserRoute>,
+        children : [
+          {path : "orders", element: <UserOrder></UserOrder>},
+          {path : "invoices", element: <Invoices></Invoices>},
+          {path : "profile", element: <UserProfile></UserProfile>},
+        ]
+      }
     ],
   },
 ]);
 
-export default router;
+export default Router;
 

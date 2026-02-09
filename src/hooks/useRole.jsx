@@ -1,31 +1,37 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useAuth from "./useAuth";
 import axios from "axios";
 
 const useRole = () => {
   const { user, loading } = useAuth();
-  const [role, setRole] = useState(null); // user identify
-  const [roleLoading, setRoleLoading] = useState(true); // fetch user category
+  const [role, setRole] = useState(null);
+  const [roleLoading, setRoleLoading] = useState(true);
 
   useEffect(() => {
-    if (!loading && user?.email) {
-      setRoleLoading(true); // for fetch user
+    const fetchRole = async () => {
+      if (!loading && user?.email) {
+        setRoleLoading(true);
+        try {
+          const email = encodeURIComponent(user.email);
+          const res = await axios.get(
+            `http://localhost:5000/users/role/${email}`,
+          );
+          setRole(res.data?.role ?? null);
+        } catch (error) {
+          console.error("Error fetching role:", error);
+          setRole(null);
+        } finally {
+          setRoleLoading(false);
+        }
+      } else if (!loading && !user?.email) {
+        setRole(null);
+        setRoleLoading(false);
+      }
+    };
 
-      axios
-        .get(`users/role/${user.email}`)
-        .then((res) => {
-          console.log(res.data.role);
-          setRole(res.data.role);
-        })
-        .catch(() => setRole(null))
-        .finally(setRoleLoading(false));
-    }
-    // if user logged out
-    if (!loading && !user?.email) {
-      setRole(null);
-      setRoleLoading(false);
-    }
+    fetchRole();
   }, [user, loading]);
+
   return { role, roleLoading };
 };
 

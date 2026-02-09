@@ -8,7 +8,7 @@ import useAuth from "../../../hooks/useAuth";
 import userIcon from "../../../assets/user.png";
 import { PiUser } from "react-icons/pi";
 import { IoSettingsOutline } from "react-icons/io5";
-import { MdOutlineNotificationsActive } from "react-icons/md";
+import { MdOutlineDashboardCustomize, MdOutlineNotificationsActive } from "react-icons/md";
 import { LiaSignOutAltSolid } from "react-icons/lia";
 import showToast from "../../../utilities/showToast/showToast";
 
@@ -114,6 +114,15 @@ const Navbar = () => {
                     <li>
                       <Link to="" className="flex gap-2 items-center ">
                         <PiUser></PiUser> My profile
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/dashboard"
+                        className="flex gap-2 items-center "
+                      >
+                        <MdOutlineDashboardCustomize />
+                        Dashboard
                       </Link>
                     </li>
                     <li>
