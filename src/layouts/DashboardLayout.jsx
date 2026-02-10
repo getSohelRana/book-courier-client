@@ -43,12 +43,13 @@ const DashboardLayout = () => {
 
   return (
     <div className="drawer lg:drawer-open">
+      <title>{role}</title>
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content">
         {/* Navbar */}
         <div className=" bg-base-300 shadow-sm">
           <Container>
-            <nav className="navbar w-full">
+            <nav className="navbar w-full gap-3">
               <label
                 htmlFor="my-drawer-4"
                 aria-label="open sidebar"
@@ -70,22 +71,22 @@ const DashboardLayout = () => {
                   <path d="M14 10l2 2l-2 2"></path>
                 </svg>
               </label>
-              <div className="flex-1">
+              <div className="flex-1 ">
                 {/* show role base dashboard title */}
                 <h2 className="text-[14px] sm:text-lg font-semibold capitalize">
                   {role} Dashboard
                 </h2>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 ">
                 {/* toggle theme */}
                 <ThemeSwitcher></ThemeSwitcher>
                 {/* search button */}
-                <div className="join">
+                <div className="join hidden min-[475px]:flex ">
                   <div>
                     <div>
                       <input
                         type="search"
-                        className="input join-item"
+                        className="input join-item w-30 sm:w-auto"
                         placeholder="Search"
                       />
                     </div>
