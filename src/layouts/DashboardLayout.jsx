@@ -23,7 +23,7 @@ const DashboardLayout = () => {
 
   const { user, loading, setLoading, signOutUser } = useAuth();
   const { role, roleLoading } = useRole();
-  console.log(user);
+  // console.log(user);
   if (loading || roleLoading) return <Loading />;
 
    const handleSignOut = async () => {

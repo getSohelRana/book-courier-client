@@ -4,9 +4,35 @@ import { useForm } from "react-hook-form";
 import { imgUpload } from "../../../../utilities/imgUpload/imgUpload";
 import useAuth from "../../../../hooks/useAuth";
 import axios from "axios";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import showToast from "../../../../utilities/showToast/showToast";
+import ErrorPage from '../../../ErrorPage'
+
 
 const AddBook = () => {
-  const {user} = useAuth();
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+  const { isPending, isError, mutateAsync } = useMutation({
+    mutationFn: async (payload) => {
+      const res = await axios.post(
+        `${import.meta.env.VITE_api_url}/all-books`,
+        payload,
+      );
+      return res.data;
+    },
+
+    onSuccess: () => {
+      showToast("success", "Book added successfully");
+      queryClient.invalidateQueries({ queryKey: ["all-books"] });
+      reset();
+    },
+
+    onError: (error) => {
+      showToast("error", error.response?.data?.message || "Failed to add book");
+    },
+  });
+
+  // react hook form
   const {
     register,
     handleSubmit,
@@ -45,18 +71,17 @@ const AddBook = () => {
           photo: user?.photoURL,
           email: user?.email,
         },
-        createdAt : new Date()
+        createdAt: new Date(),
       };
-      const bookAdd = await axios.post(`http://localhost:5000/all-books`, bookData);
-      console.log(bookAdd)
+      await mutateAsync(bookData);
       reset();
     } catch (error) {
-      console.log(error);
+      showToast("error", "Image upload failed");
     } finally {
       console.log();
     }
   };
-
+  if(isError) return <ErrorPage></ErrorPage>
   return (
     <Container>
       <div className="max-w-4xl mx-auto mt-10">
@@ -281,7 +306,7 @@ const AddBook = () => {
             {/* Submit button (full width) */}
             <div className="md:col-span-2">
               <button type="submit" className="btn bg-secondary w-full mt-4">
-                Add Book
+                {isPending ? "Adding Book to Library..." : "Add book"}
               </button>
             </div>
           </fieldset>
