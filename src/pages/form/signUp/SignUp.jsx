@@ -8,6 +8,7 @@ import showToast from "../../../utilities/showToast/showToast";
 import LoadingDots from "../../../components/shared/loading/LoadingDots";
 import axios from "axios";
 import useSaveUser from "../../../hooks/useSaveUser";
+import { imgUpload } from "../../../utilities/imgUpload/imgUpload";
 
 const SignUp = () => {
   const {saveUserToDB} = useSaveUser()
@@ -29,15 +30,7 @@ const SignUp = () => {
     try {
       const profileImg = data.profileImg[0];
       // console.log(profileImg)
-
-      // prepare form data for imgBB
-      const formData = new FormData();
-      formData.append("image", profileImg);
-
-      // img upload to imgBB
-      const img_api_url = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_img_host_key}`;
-      const imgRes = await axios.post(img_api_url, formData);
-      const photoURL = imgRes.data.data.url;
+      const photoURL = await imgUpload(profileImg)
       // console.log("after img upload", photoURL);
 
       // create new user

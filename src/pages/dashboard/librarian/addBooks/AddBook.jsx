@@ -1,8 +1,12 @@
 import React from "react";
 import Container from "../../../../components/shared/Container";
 import { useForm } from "react-hook-form";
+import { imgUpload } from "../../../../utilities/imgUpload/imgUpload";
+import useAuth from "../../../../hooks/useAuth";
+import axios from "axios";
 
 const AddBook = () => {
+  const {user} = useAuth();
   const {
     register,
     handleSubmit,
@@ -10,9 +14,47 @@ const AddBook = () => {
     reset,
   } = useForm({ mode: "onChange" });
 
-  const handleAddBook = (data) => {
-    console.log(data);
-    reset();
+  const handleAddBook = async (data) => {
+    const {
+      authorName,
+      bookName,
+      category,
+      description,
+      pages,
+      price,
+      publish,
+      quantity,
+    } = data;
+    try {
+      const coverImg = data.coverImg[0];
+      // console.log(coverImg);
+      const photoURL = await imgUpload(coverImg);
+
+      const bookData = {
+        authorName,
+        bookName,
+        category,
+        description,
+        pages: Number(pages),
+        price: Number(price),
+        publish,
+        quantity: Number(quantity),
+        coverImg: photoURL,
+        addedBy: {
+          name: user?.displayName,
+          photo: user?.photoURL,
+          email: user?.email,
+        },
+        createdAt : new Date()
+      };
+      const bookAdd = await axios.post(`http://localhost:5000/all-books`, bookData);
+      console.log(bookAdd)
+      reset();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      console.log();
+    }
   };
 
   return (
@@ -31,7 +73,7 @@ const AddBook = () => {
         {/* Form */}
         <form onSubmit={handleSubmit(handleAddBook)}>
           <fieldset className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Book name (full width) */}
+            {/* Book name  */}
             <div className="space-y-2">
               <label className="label">Book name</label>
               <input
@@ -156,7 +198,7 @@ const AddBook = () => {
 
             {/* Price */}
             <div className="space-y-2">
-              <label className="label">Book price (৳)</label>
+              <label className="label">Book price</label>
               <input
                 type="number"
                 min={1}
@@ -179,9 +221,10 @@ const AddBook = () => {
             </div>
 
             {/* Cover image (full width) */}
-            <div className="md:col-span-2 space-y-2">
+            <div className=" space-y-2">
               <label className="label">Book cover image</label>
               <input
+                name="coverImg"
                 type="file"
                 className="file-input file-input-primary w-full"
                 {...register("coverImg", {
@@ -194,7 +237,47 @@ const AddBook = () => {
                 </p>
               )}
             </div>
-
+            {/* book quantity*/}
+            <div className="space-y-2">
+              <label className="label">Book Quantity</label>
+              <input
+                type="number"
+                name="quantity"
+                placeholder="Enter quantity"
+                className={`input w-full
+                  ${errors.quantity ? "input-error" : ""}
+                  ${!errors.quantity && dirtyFields.quantity ? "input-success" : ""}
+                `}
+                {...register("quantity", {
+                  required: "Book quantity is required",
+                  min: {
+                    value: 1,
+                    message: "Book quantity must be at least 1 item",
+                  },
+                })}
+              />
+              {errors.quantity && (
+                <p className="text-error text-sm">{errors.quantity.message}</p>
+              )}
+            </div>
+            {/* Book description  */}
+            <div className="md:col-span-2">
+              <label className="label">Write book description</label>
+              <textarea
+                name="description"
+                className={`textarea w-full ${errors.description ? "input-error" : ""}
+              ${!errors.description && dirtyFields.description ? "input-success" : ""}`}
+                placeholder="Write book description"
+                {...register("description", {
+                  required: "Book description required",
+                })}
+              ></textarea>
+              {errors.description && (
+                <p className="text-error text-sm">
+                  {errors.description.message}
+                </p>
+              )}
+            </div>
             {/* Submit button (full width) */}
             <div className="md:col-span-2">
               <button type="submit" className="btn bg-secondary w-full mt-4">
