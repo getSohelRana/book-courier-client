@@ -22,6 +22,7 @@ import UserRoute from "./UserRoute";
 import UserOrder from "../pages/dashboard/user/userOrder/UserOrder";
 import Invoices from "../pages/dashboard/user/invoices/invoices";
 import UserProfile from "../pages/dashboard/user/userProfile/userProfile";
+import CardDetails from "../components/allBooks/cardDetails/cardDetails";
 
 const Router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const Router = createBrowserRouter([
           />
         ),
       },
+      {
+        path: "/book-details/:id",
+        element : <CardDetails></CardDetails>
+      }
     ],
   },
   {
