@@ -1,13 +1,16 @@
 import { useParams } from "react-router";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import Loading from "../../shared/loading/Loading";
 import Container from "../../shared/Container";
 import { GoHeart } from "react-icons/go";
+import { useState } from "react";
+import OrderModal from "../../modal/paymentModal/OrderModal";
 
 const CardDetails = () => {
+  const queryClient = useQueryClient();
+  let [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
-
   const { data: book = {}, isLoading } = useQuery({
     queryKey: ["book-details", id],
     queryFn: async () => {
@@ -30,6 +33,9 @@ const CardDetails = () => {
     addedBy,
     createdAt,
   } = book;
+  const closeModal = () => {
+    setIsOpen(false);
+  };
 
   if (isLoading) return <Loading></Loading>;
 
@@ -87,12 +93,29 @@ const CardDetails = () => {
                       : "bg-red-100 text-red-600"
                   }`}
                 >
-                  {quantity > 0 ? "In Stock" : "Out of Stock"}
+                  {quantity} {quantity > 0 ? "In Stock" : "Out of Stock"}
                 </span>
               </div>
+              {/* action button */}
               <div className="my-2">
-                <button className="btn w-full text-white">Order Now</button>
+                <button
+                  onClick={() => setIsOpen(true)}
+                  className="btn w-full text-white"
+                  disabled={quantity === 0}
+                >
+                  Order Now
+                </button>
+
+                <OrderModal
+                  book={book}
+                  closeModal={closeModal}
+                  isOpen={isOpen}
+                  refetchBook={() =>
+                    queryClient.invalidateQueries(["book-details", id])
+                  }
+                />
               </div>
+
               <div className=" flex  gap-3 items-center  text-xs text-gray-400 mt-3 border-t pt-2">
                 <img
                   src={addedBy?.photo}
