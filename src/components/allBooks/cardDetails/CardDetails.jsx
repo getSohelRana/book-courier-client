@@ -6,13 +6,15 @@ import Container from "../../shared/Container";
 import { GoHeart } from "react-icons/go";
 import { useState } from "react";
 import OrderModal from "../../modal/paymentModal/OrderModal";
+import { FaStar } from "react-icons/fa";
 
 const CardDetails = () => {
   const queryClient = useQueryClient();
   let [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
+  // book detail query
   const { data: book = {}, isLoading } = useQuery({
-    queryKey: ["book-details", id],
+    queryKey: ["orders", id],
     queryFn: async () => {
       const res = await axios(
         `${import.meta.env.VITE_api_url}/book-details/${id}`,
@@ -36,6 +38,16 @@ const CardDetails = () => {
   const closeModal = () => {
     setIsOpen(false);
   };
+
+  // reviews query
+  const { data: reviews = [], isLoading: reviewLoading } = useQuery({
+    queryKey: ["reviews", id],
+    queryFn: async () => {
+      const res = await axios(`${import.meta.env.VITE_api_url}/orders/${id}`);
+      return res.data.data;
+    },
+  });
+  console.log(reviews)
 
   if (isLoading) return <Loading></Loading>;
 
@@ -135,9 +147,48 @@ const CardDetails = () => {
             </div>
           </div>
         </div>
+
+        {/* Reviews Section */}
+        <div className="mt-10">
+          <h3 className="text-2xl font-bold mb-4">
+            Ratings & Reviews ({reviews.length})
+          </h3>
+
+          {reviewLoading ? (
+            <p>Loading reviews...</p>
+          ) : reviews.length === 0 ? (
+            <p className="text-gray-400">No reviews yet</p>
+          ) : (
+            <div className="space-y-4">
+              {reviews.map((review) => (
+                <div
+                  key={review._id}
+                  className="border border-primary rounded-xl p-4 shadow-sm"
+                >
+                  <div className="flex justify-between items-center">
+                    <h4 className="font-semibold">{review.customerName}</h4>
+
+                    {/* Rating stars */}
+                    <span className="flex gap-1 items-center text-secondary">
+                      {[...Array(review.rating)].map((_, i) => (
+                        <FaStar key={i} />
+                      ))}
+                    </span>
+                  </div>
+
+                  <p className="text-gray-600 mt-2">{review.comment}</p>
+
+                  <p className="text-xs text-gray-400 mt-2">
+                    {new Date(review.createdAt).toLocaleDateString()}
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </Container>
   );
-};
+};;
 
 export default CardDetails;

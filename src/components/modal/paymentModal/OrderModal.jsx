@@ -28,6 +28,7 @@ const OrderModal = ({ closeModal, isOpen, book, refetchBook }) => {
         showToast("success", "Order placed successfully!");
       }
       queryClient.invalidateQueries({ queryKey: ["orders", user?.email] });
+      queryClient.invalidateQueries(["reviews", book._id]);
       reset();
       closeModal();
       refetchBook();
