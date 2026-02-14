@@ -53,7 +53,7 @@ const CardDetails = () => {
 
   return (
     <Container>
-      <div className="max-w-4xl mx-auto my-10 px-4">
+      <div className="max-w-5xl mx-auto my-10 px-4">
         <div className="grid md:grid-cols-2 gap-10">
           {/* Image */}
           <div className="h-auto w-full rounded-2xl overflow-hidden">
