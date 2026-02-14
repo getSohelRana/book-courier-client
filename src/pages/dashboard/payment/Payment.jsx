@@ -9,10 +9,14 @@ import { FaCreditCard } from "react-icons/fa";
 const Payment = () => {
   const { id } = useParams();
 
-  const { data: payment, isLoading } = useQuery({
+  //payment details
+  const {
+    data: payment,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["payment", id],
     enabled: !!id,
-
     queryFn: async () => {
       const res = await axios.get(
         `${import.meta.env.VITE_api_url}/payment/${id}`,
@@ -20,7 +24,11 @@ const Payment = () => {
       return res.data;
     },
   });
+
+  // Stripe checkout handler
   const handlePayment = async () => {
+    if (!payment) return;
+
     try {
       const paymentInfo = {
         price: payment.price,
@@ -34,33 +42,53 @@ const Payment = () => {
         paymentInfo,
       );
 
-      //redirect to Stripe Checkout
+      // Redirect to Stripe Checkout
       window.location.href = res.data.url;
     } catch (error) {
-      console.log(error);
+      console.error("Payment failed:", error);
+      alert("Failed to initiate payment. Please try again.");
     }
   };
 
-  // console.log(payment);
-  if (isLoading) return <Loading></Loading>;
+  // Loading state
+  if (isLoading) return <Loading />;
+
+  // Error state
+  if (isError || !payment) {
+    return (
+      <Container>
+        <div className="text-center mt-20">
+          <p className="text-red-600 font-semibold">
+            Failed to load payment details.
+          </p>
+        </div>
+      </Container>
+    );
+  }
 
   return (
     <Container>
       <div className="max-w-xl mx-auto my-10">
-        <div className="card bg-base-300 shadow-sm text-center">
+        <div className="card bg-base-300 shadow-lg text-center">
           <div className="card-body">
-            <h2 className="text-xl font-semibold">
-              You are about to purchase:
-              <span className="text-secondary"> {payment.bookName}</span>
+            <h2 className="text-xl font-semibold mb-4">
+              You are about to purchase:{" "}
+              <span className="text-secondary">{payment.bookName}</span>
             </h2>
-            <div className="flex items-center">
-              <p className="text-success">Price: {payment.price}</p>
-              <p className="text-error">Status: {payment.paymentStatus}</p>
+
+            <div className="flex justify-center gap-8 mb-4">
+              <p className="text-success font-medium">
+                Price: ${payment.price}
+              </p>
+              <p className="text-error font-medium">
+                Status: {payment.paymentStatus}
+              </p>
             </div>
-            <p>
+
+            <p className="mb-6">
               Complete your payment securely to place your order successfully.
             </p>
-            <div className="justify-center card-actions mt-5">
+            <div className="card-actions justify-center">
               <button
                 type="button"
                 onClick={handlePayment}
