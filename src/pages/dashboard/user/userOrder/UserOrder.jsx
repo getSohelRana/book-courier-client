@@ -1,56 +1,79 @@
 import axios from "axios";
 import useAuth from "../../../../hooks/useAuth";
-import { useEffect, useState } from "react";
 import Loading from "../../../../components/shared/loading/Loading";
 import ErrorPage from "../../../ErrorPage";
 import Container from "../../../../components/shared/Container";
+import Swal from "sweetalert2";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 const UserOrder = () => {
   const { user } = useAuth();
-  const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  useEffect(() => {
-    if (!user?.email) return;
 
-    const fetchOrders = async () => {
-      setLoading(true);
-      try {
-        const res = await axios.get(
-          `${import.meta.env.VITE_api_url}/my-order`,
-          { params: { email: user.email } },
-        );
-        setOrders(res.data);
-        setError(null);
-      } catch (err) {
-        console.error(err);
-        setError("Failed to fetch orders");
-      } finally {
-        setLoading(false);
+  const queryClient = useQueryClient();
+
+  const { data: orders = [], isPending } = useQuery({
+    queryKey: ["orders", user?.email],
+    enabled: !!user?.email,
+    queryFn: async () => {
+      const res = await axios.get(`${import.meta.env.VITE_api_url}/my-order`, {
+        params: { email: user.email },
+      });
+      return res.data;
+    },
+  });
+
+  const deleteOrderMutation = useMutation({
+    mutationFn: async (id) => {
+      const res = await axios.delete(
+        `${import.meta.env.VITE_api_url}/orders/${id}`,
+      );
+      return res.data;
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries(["orders", user?.email]);
+
+      Swal.fire({
+        title: "Cancelled!",
+        text: "Order cancelled successfully",
+        icon: "success",
+      });
+    },
+
+    onError: () => {
+      Swal.fire("Error!", "Delete failed!", "error");
+    },
+  });
+
+  const handleCancel = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "This order will be cancelled!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, cancel it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteOrderMutation.mutate(id);
       }
-    };
+    });
+  };
 
-    fetchOrders();
-  }, [user?.email]);
+  const handlePay = (id) => {
+    console.log("payment clicked", id);
+  };
 
-  const handleCancel = () => {
-    console.log('btn clicked')
-  }
-  const handlePay = ( ) => {
-    console.log('btn clicked')
-  }
-
-  if (loading) return <Loading></Loading>;
-  if (error) return <ErrorPage></ErrorPage>;
-  console.log(orders);
   return (
     <Container>
       <div className="max-w-5xl mx-auto my-10 px-4">
-        <h2 className="text-xl font-bold mb-4">Your Orders</h2>
+        <h2 className="text-xl font-bold mb-4">Your Orders {orders.length}</h2>
         <div className="overflow-x-auto">
           <table className="table w-full">
             <thead>
               <tr>
+                <th>#</th>
                 <th>Book Title</th>
                 <th>Order Date</th>
                 <th>Status</th>
@@ -59,8 +82,9 @@ const UserOrder = () => {
               </tr>
             </thead>
             <tbody>
-              {orders.map((order) => (
+              {orders.map((order, index) => (
                 <tr key={order._id}>
+                  <td>{index + 1}</td>
                   {/* book title */}
                   <td className="uppercase">{order.bookName}</td>
                   <td>
@@ -87,14 +111,14 @@ const UserOrder = () => {
                     {order.orderStatus === "pending" && (
                       <>
                         <button
-                        type="button"
+                          type="button"
                           className="btn btn-sm btn-error"
                           onClick={() => handleCancel(order._id)}
                         >
                           Cancel
                         </button>
                         <button
-                        type="button"
+                          type="button"
                           className="btn btn-sm btn-primary"
                           onClick={() => handlePay(order._id)}
                         >
@@ -116,25 +140,6 @@ const UserOrder = () => {
             </tbody>
           </table>
         </div>
-        {/* {orders.length === 0 ? (
-        <p>No orders found.</p>
-      ) : (
-        <ul>
-          {orders.map((order) => (
-            <li key={order._id} className="border p-2 mb-2 rounded">
-              <p>
-                <strong>Book:</strong> {order.bookName}
-              </p>
-              <p>
-                <strong>Price:</strong> ${order.price}
-              </p>
-              <p>
-                <strong>Status:</strong> {order.status}
-              </p>
-            </li>
-          ))}
-        </ul> 
-      )}*/}
       </div>
     </Container>
   );
