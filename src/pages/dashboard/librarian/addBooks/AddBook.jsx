@@ -84,7 +84,7 @@ const AddBook = () => {
   if(isError) return <ErrorPage></ErrorPage>
   return (
     <Container>
-      <div className="max-w-4xl mx-auto mt-10">
+      <div className="max-w-5xl mx-auto mt-10">
         <title>Librarian | Add Book</title>
 
         {/* Header */}

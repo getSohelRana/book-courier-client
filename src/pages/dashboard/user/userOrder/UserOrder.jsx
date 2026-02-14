@@ -1,17 +1,16 @@
 import axios from "axios";
 import useAuth from "../../../../hooks/useAuth";
-import Loading from "../../../../components/shared/loading/Loading";
-import ErrorPage from "../../../ErrorPage";
 import Container from "../../../../components/shared/Container";
 import Swal from "sweetalert2";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Link } from "react-router";
 
 const UserOrder = () => {
   const { user } = useAuth();
 
   const queryClient = useQueryClient();
 
-  const { data: orders = [], isPending } = useQuery({
+  const { data: orders = [] } = useQuery({
     queryKey: ["orders", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
@@ -59,10 +58,6 @@ const UserOrder = () => {
         deleteOrderMutation.mutate(id);
       }
     });
-  };
-
-  const handlePay = (id) => {
-    console.log("payment clicked", id);
   };
 
   return (
@@ -117,13 +112,12 @@ const UserOrder = () => {
                         >
                           Cancel
                         </button>
-                        <button
+                        <Link to={`/dashboard/payment/${order._id}`}
                           type="button"
                           className="btn btn-sm btn-primary"
-                          onClick={() => handlePay(order._id)}
                         >
                           Pay Now
-                        </button>
+                        </Link>
                       </>
                     )}
                     {order.orderStatus === "paid" && (

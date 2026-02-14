@@ -23,6 +23,9 @@ import UserOrder from "../pages/dashboard/user/userOrder/UserOrder";
 import Invoices from "../pages/dashboard/user/invoices/invoices";
 import UserProfile from "../pages/dashboard/user/userProfile/userProfile";
 import CardDetails from "../components/allBooks/cardDetails/cardDetails";
+import Payment from "../pages/dashboard/payment/Payment";
+import PaymentSuccess from "../pages/dashboard/payment/paymentSuccess";
+import PaymentCancelled from "../pages/dashboard/payment/PaymentCancelled";
 
 const Router = createBrowserRouter([
   {
@@ -47,8 +50,8 @@ const Router = createBrowserRouter([
       },
       {
         path: "/book-details/:id",
-        element : <CardDetails></CardDetails>
-      }
+        element: <CardDetails></CardDetails>,
+      },
     ],
   },
   {
@@ -82,6 +85,18 @@ const Router = createBrowserRouter([
     ),
     children: [
       {
+        path: "payment/:id",
+        element: <Payment></Payment>,
+      },
+      {
+        path: "payment-success",
+        element: <PaymentSuccess></PaymentSuccess>
+      },
+      {
+        path: "payment-cancelled",
+        element: <PaymentCancelled></PaymentCancelled>
+      },
+      {
         path: "admin",
         element: <AdminRoute />,
         children: [
@@ -94,20 +109,20 @@ const Router = createBrowserRouter([
         path: "librarian",
         element: <LibrarianRoute />,
         children: [
-          {path : "add-book", element: <AddBook></AddBook>},
+          { path: "add-book", element: <AddBook></AddBook> },
           { path: "my-books", element: <MyBooks /> },
           { path: "my-orders", element: <MyOrders /> },
         ],
       },
       {
-        path : 'user',
+        path: "user",
         element: <UserRoute></UserRoute>,
-        children : [
-          {path : "orders", element: <UserOrder></UserOrder>},
-          {path : "invoices", element: <Invoices></Invoices>},
-          {path : "profile", element: <UserProfile></UserProfile>},
-        ]
-      }
+        children: [
+          { path: "orders", element: <UserOrder></UserOrder> },
+          { path: "invoices", element: <Invoices></Invoices> },
+          { path: "profile", element: <UserProfile></UserProfile> },
+        ],
+      },
     ],
   },
 ]);
