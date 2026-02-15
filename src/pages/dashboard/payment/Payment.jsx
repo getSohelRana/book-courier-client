@@ -45,7 +45,7 @@ const Payment = () => {
       // Redirect to Stripe Checkout
       window.location.href = res.data.url;
     } catch (error) {
-      console.error("Payment failed:", error);
+      // console.error("Payment failed:", error);
       alert("Failed to initiate payment. Please try again.");
     }
   };

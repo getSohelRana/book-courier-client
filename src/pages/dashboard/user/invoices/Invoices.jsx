@@ -31,7 +31,7 @@ const Invoices = () => {
 
     fetchPayments();
   }, [user?.email]);
-console.log(payments)
+// console.log(payments)
   if (loading) return <Loading />;
 
   if (payments.length === 0)
@@ -67,7 +67,7 @@ console.log(payments)
                   <td>{index + 1}</td>
                   <td>{pmt.bookName || "N/A"}</td>
                   <td>{pmt.price}</td>
-                  <td>{pmt.currency.toUpperCase()}</td>
+                  <td>{pmt.currency === 'usd' ? "BDT" : ""}</td>
                   <td>{pmt.transactionId}</td>
                   <td>
                     <span

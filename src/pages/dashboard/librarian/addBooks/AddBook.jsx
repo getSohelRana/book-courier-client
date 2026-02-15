@@ -77,9 +77,7 @@ const AddBook = () => {
       reset();
     } catch (error) {
       showToast("error", "Image upload failed");
-    } finally {
-      console.log();
-    }
+    } 
   };
   if(isError) return <ErrorPage></ErrorPage>
   return (

@@ -14,7 +14,7 @@ const useRole = () => {
         try {
           const email = encodeURIComponent(user.email);
           const res = await axios.get(
-            `http://localhost:5000/users/role/${email}`,
+            `${import.meta.env.VITE_api_url}/users/role/${email}`,
           );
           setRole(res.data?.role ?? null);
         } catch (error) {

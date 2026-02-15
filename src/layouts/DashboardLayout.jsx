@@ -203,7 +203,7 @@ const DashboardLayout = () => {
                 <NavLink
                   to="user/invoices"
                   className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                  data-tip="Orders"
+                  data-tip="Invoices"
                 >
                   <LiaFileInvoiceDollarSolid />
                   <span className="is-drawer-close:hidden">invoices</span>

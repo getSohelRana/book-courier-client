@@ -50,7 +50,11 @@ const Router = createBrowserRouter([
       },
       {
         path: "/book-details/:id",
-        element: <CardDetails></CardDetails>,
+        element: (
+          <PrivateRoute>
+            <CardDetails></CardDetails>,
+          </PrivateRoute>
+        ),
       },
     ],
   },
@@ -90,11 +94,11 @@ const Router = createBrowserRouter([
       },
       {
         path: "payment-success",
-        element: <PaymentSuccess></PaymentSuccess>
+        element: <PaymentSuccess></PaymentSuccess>,
       },
       {
         path: "payment-cancelled",
-        element: <PaymentCancelled></PaymentCancelled>
+        element: <PaymentCancelled></PaymentCancelled>,
       },
       {
         path: "admin",
@@ -128,4 +132,3 @@ const Router = createBrowserRouter([
 ]);
 
 export default Router;
-

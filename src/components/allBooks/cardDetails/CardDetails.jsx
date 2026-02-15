@@ -47,7 +47,7 @@ const CardDetails = () => {
       return res.data.data;
     },
   });
-  console.log(reviews)
+  // console.log(reviews)
 
   if (isLoading) return <Loading></Loading>;
 

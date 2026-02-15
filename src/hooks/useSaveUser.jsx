@@ -9,7 +9,7 @@ const useSaveUser = () => {
     };
 
     try {
-      const res = await axios.post("http://localhost:5000/users", user);
+      const res = await axios.post(`${import.meta.env.VITE_api_url}`, user);
       return {
         success: true,
         data: res.data,
