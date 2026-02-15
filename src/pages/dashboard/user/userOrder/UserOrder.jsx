@@ -4,13 +4,14 @@ import Container from "../../../../components/shared/Container";
 import Swal from "sweetalert2";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router";
+import Loading from "../../../../components/shared/loading/Loading";
 
 const UserOrder = () => {
   const { user } = useAuth();
 
   const queryClient = useQueryClient();
 
-  const { data: orders = [] } = useQuery({
+  const { data: orders = [], isLoading } = useQuery({
     queryKey: ["orders", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
@@ -59,7 +60,7 @@ const UserOrder = () => {
       }
     });
   };
-
+  if (isLoading) return <Loading></Loading>;
   return (
     <Container>
       <div className="max-w-5xl mx-auto my-10 px-4">
@@ -102,7 +103,7 @@ const UserOrder = () => {
                     </span>
                   </td>
                   <td>{Number(order.quantity) * Number(order.price)}</td>
-                  <td className="space-x-2">
+                  <td className="flex gap-1 items-center">
                     {order.orderStatus === "pending" && (
                       <>
                         <button
@@ -112,21 +113,14 @@ const UserOrder = () => {
                         >
                           Cancel
                         </button>
-                        <Link to={`/dashboard/payment/${order._id}`}
+                        <Link
+                          to={`/dashboard/payment/${order._id}`}
                           type="button"
                           className="btn btn-sm btn-primary"
                         >
                           Pay Now
                         </Link>
                       </>
-                    )}
-                    {order.orderStatus === "paid" && (
-                      <span className="text-green-600 font-semibold">Paid</span>
-                    )}
-                    {order.status === "cancelled" && (
-                      <span className="text-red-600 font-semibold">
-                        Cancelled
-                      </span>
                     )}
                   </td>
                 </tr>

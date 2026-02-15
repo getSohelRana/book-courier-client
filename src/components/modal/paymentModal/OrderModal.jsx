@@ -34,7 +34,7 @@ const OrderModal = ({ closeModal, isOpen, book, refetchBook }) => {
       refetchBook();
     },
   });
-  const { _id, bookName, price, quantity } = book;
+  const { _id, bookName, price, quantity} = book;
 
   const {
     register,
@@ -53,7 +53,6 @@ const OrderModal = ({ closeModal, isOpen, book, refetchBook }) => {
       customerEmail: user.email,
       phone: data.phone,
       address: data.address,
-
       rating: Number(data.rating),
       comment: data.comment,
 

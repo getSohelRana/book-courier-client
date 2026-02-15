@@ -9,7 +9,7 @@ import { FaCreditCard } from "react-icons/fa";
 const Payment = () => {
   const { id } = useParams();
 
-  //payment details
+  // Fetch order/payment details
   const {
     data: payment,
     isLoading,
@@ -32,7 +32,7 @@ const Payment = () => {
     try {
       const paymentInfo = {
         price: payment.price,
-        bookId: payment.bookId,
+        orderId: payment._id,
         bookName: payment.bookName,
         customerEmail: payment.customerEmail,
       };
@@ -49,6 +49,7 @@ const Payment = () => {
       alert("Failed to initiate payment. Please try again.");
     }
   };
+  
 
   // Loading state
   if (isLoading) return <Loading />;
@@ -88,6 +89,7 @@ const Payment = () => {
             <p className="mb-6">
               Complete your payment securely to place your order successfully.
             </p>
+
             <div className="card-actions justify-center">
               <button
                 type="button"
