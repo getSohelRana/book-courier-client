@@ -11,7 +11,7 @@ import axios from "axios";
 import { useQueryClient } from "@tanstack/react-query";
 
 const UserProfile = () => {
-  const { user, updateUserProfile, loading } = useAuth();
+  const { user, updateUserProfile } = useAuth();
 // console.log(user)
   const { userData, isLoading } = useUserRole();
   const [isOpen, setIsOpen] = useState(false);

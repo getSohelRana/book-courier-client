@@ -2,9 +2,11 @@ import React from "react";
 import useAuth from "../../../hooks/useAuth";
 import { useLocation, useNavigate } from "react-router";
 import showToast from "../../../utilities/showToast/showToast";
+import useSaveUser from "../../../hooks/useSaveUser";
 
 const GoogleLogIn = () => {
   const { loginWithGoogle, loading, setLoading } = useAuth();
+  const { saveUserToDB } = useSaveUser();
   const location = useLocation();
   const navigate = useNavigate();
   const redirectTo = location.state?.from?.pathname || "/";
@@ -16,7 +18,18 @@ const GoogleLogIn = () => {
       const res = await loginWithGoogle();
       const user = res.user;
       // console.log(user);
-      showToast("success", `Welcome, ${user.displayName || "User"}!`);
+      // save user DB
+      const result = await saveUserToDB({
+        name: user.displayName || "Unknown",
+        email: user.email || "",
+        photoURL: user.photoURL || "",
+      });
+      // console.log(result)
+      //success toast
+      if (result?.insertedId) {
+        showToast("success", `Welcome back, ${user.displayName || "User"}! 🎉`);
+      }
+      // showToast("success", `Welcome, ${user.displayName || "User"}!`);
 
       navigate(redirectTo, { replace: true });
     } catch (error) {
@@ -39,6 +52,7 @@ const GoogleLogIn = () => {
         disabled={loading}
         className="btn w-full mx-auto mt-3 bg-base-200"
         onClick={handleGoogleLogin}
+        aria-label="Continue with Google"
       >
         <img
           src="https://www.svgrepo.com/show/475656/google-color.svg"
