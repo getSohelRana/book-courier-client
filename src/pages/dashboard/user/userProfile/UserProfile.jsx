@@ -4,21 +4,70 @@ import Loading from "../../../../components/shared/loading/Loading";
 import { FaEdit } from "react-icons/fa";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { useForm } from "react-hook-form";
+import { imgUpload } from "../../../../utilities/imgUpload/imgUpload";
+import useAuth from "../../../../hooks/useAuth";
+import showToast from "../../../../utilities/showToast/showToast";
+import axios from "axios";
+import { useQueryClient } from "@tanstack/react-query";
 
 const UserProfile = () => {
+  const { user, updateUserProfile, loading } = useAuth();
+// console.log(user)
   const { userData, isLoading } = useUserRole();
   const [isOpen, setIsOpen] = useState(false);
-
+  const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, dirtyFields },
   } = useForm({ mode: "onChange" });
 
-  const handleUpdateProfile = (data) => {
-    console.log(data);
-  };
+  const handleUpdateProfile = async (data) => {
+    try {
+      const profileImg = data.profileImg[0];
 
+      // image upload (must await)
+      const photoURL = await imgUpload(profileImg);
+
+      const updateProfileData = {
+        displayName: data.name,
+        photoURL: photoURL,
+      };
+
+      console.log(updateProfileData);
+
+      //firebase profile update
+      await updateUserProfile(updateProfileData);
+
+      // save database
+      const result = await axios.patch(
+        `${import.meta.env.VITE_api_url}/users`,
+        {
+          email: user?.email,
+          name: data.name,
+          photoURL,
+        },
+      );
+
+      // success toast
+     if (result?.data?.modifiedCount > 0) {
+       showToast(
+         "success",
+         `Welcome, ${data.name}! Your profile has been updated successfully 🎉`,
+       );
+     }
+
+      reset();
+      queryClient.invalidateQueries(["useSaveUser"]);
+      closeModal();
+    } catch (error) {
+      console.log("PROFILE UPDATE ERROR:", error);
+    }
+  };
+ const closeModal = () => {
+  setIsOpen(false)
+ }
   if (isLoading) return <Loading />;
 
   return (
