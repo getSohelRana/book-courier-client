@@ -26,6 +26,7 @@ import CardDetails from "../components/allBooks/cardDetails/cardDetails";
 import Payment from "../pages/dashboard/payment/Payment";
 import PaymentSuccess from "../pages/dashboard/payment/paymentSuccess";
 import PaymentCancelled from "../pages/dashboard/payment/PaymentCancelled";
+import MyBooksEdit from "../pages/dashboard/librarian/myBooks/MyBooksEdit";
 
 const Router = createBrowserRouter([
   {
@@ -95,6 +96,10 @@ const Router = createBrowserRouter([
       {
         path: "payment-success",
         element: <PaymentSuccess></PaymentSuccess>,
+      },
+      {
+        path : "my-books/:id",
+        element : <MyBooksEdit></MyBooksEdit>
       },
       {
         path: "payment-cancelled",

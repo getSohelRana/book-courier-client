@@ -9,7 +9,7 @@ import { FaCreditCard } from "react-icons/fa";
 const Payment = () => {
   const { id } = useParams();
 
-  // Fetch order/payment details
+  //payment details
   const {
     data: payment,
     isLoading,
