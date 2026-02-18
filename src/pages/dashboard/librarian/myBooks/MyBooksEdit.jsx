@@ -84,6 +84,7 @@ const MyBooksEdit = () => {
   return (
     <Container>
       <div className="max-w-5xl mx-auto my-10">
+        <title>Edit book</title>
         <div className="mb-10">
           <h1 className="heading_title">Edit book details </h1>
           <p className="heading_subtitle">
