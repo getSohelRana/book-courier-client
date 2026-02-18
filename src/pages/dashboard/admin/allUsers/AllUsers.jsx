@@ -1,13 +1,17 @@
-import React from "react";
-import useAuth from "../../../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import Loading from "../../../../components/shared/loading/Loading";
+import Swal from "sweetalert2";
 import Container from "../../../../components/shared/Container";
+import Loading from "../../../../components/shared/loading/Loading";
+import useAuth from "../../../../hooks/useAuth";
+import useUpdateUserRole from "../../../../hooks/useUpdateUserRole";
 
 const AllUsers = () => {
   const { user } = useAuth();
   // console.log(user)
+  const { updateRole } = useUpdateUserRole();
+
+// load all users
   const { data: allUsers = [], isLoading } = useQuery({
     queryKey: ["users", user?.email],
     enabled: !!user?.email,
@@ -18,7 +22,25 @@ const AllUsers = () => {
       return res.data;
     },
   });
-  console.log(allUsers);
+  // console.log(allUsers);
+
+  // change user role
+  const handleRoleChange = (id, role) => {
+    console.log(id, role);
+    Swal.fire({
+      title: "Are you sure?",
+      text: `Make this user "${role}"?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#234c6a",
+      cancelButtonColor: "#d33",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        updateRole({ id, role });
+      }
+    });
+  };
+
   if (isLoading) return <Loading></Loading>;
   return (
     <Container>
@@ -65,17 +87,33 @@ const AllUsers = () => {
                       </button>
                     )} */}
                     {allUser.role !== "admin" && (
-                      <button className="btn btn-sm text-white/80">Make Admin</button>
+                      <button
+                        onClick={() => handleRoleChange(allUser._id, "admin")}
+                        type="button"
+                        className="btn btn-sm text-white/80"
+                      >
+                        Make Admin
+                      </button>
                     )}
 
                     {allUser.role !== "librarian" && (
-                      <button className="btn btn-sm btn-secondary">
+                      <button
+                        onClick={() =>
+                          handleRoleChange(allUser._id, "librarian")
+                        }
+                        type="button"
+                        className="btn btn-sm btn-secondary"
+                      >
                         Make Librarian
                       </button>
                     )}
 
                     {allUser.role !== "user" && (
-                      <button className="btn btn-sm btn-error">
+                      <button
+                        onClick={() => handleRoleChange(allUser._id, "user")}
+                        type="button"
+                        className="btn btn-sm btn-error"
+                      >
                         Make User
                       </button>
                     )}

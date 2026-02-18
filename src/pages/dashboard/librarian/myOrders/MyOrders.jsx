@@ -1,16 +1,13 @@
 import {
-  QueryClient,
   useMutation,
   useQuery,
-  useQueryClient,
+  useQueryClient
 } from "@tanstack/react-query";
-import React from "react";
-import useAuth from "../../../../hooks/useAuth";
 import axios from "axios";
-import Loading from "../../../../components/shared/loading/Loading";
-import { Link } from "react-router";
-import Container from "../../../../components/shared/Container";
 import Swal from "sweetalert2";
+import Container from "../../../../components/shared/Container";
+import Loading from "../../../../components/shared/loading/Loading";
+import useAuth from "../../../../hooks/useAuth";
 
 const MyOrders = () => {
   const { user } = useAuth();
@@ -59,7 +56,7 @@ const MyOrders = () => {
       text: "This order will be cancelled!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#234c6a",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, cancel it!",
     }).then((result) => {
