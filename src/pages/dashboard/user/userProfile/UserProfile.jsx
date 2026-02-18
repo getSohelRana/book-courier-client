@@ -27,7 +27,7 @@ const UserProfile = () => {
     try {
       const profileImg = data.profileImg[0];
 
-      // image upload (must await)
+      // image upload
       const photoURL = await imgUpload(profileImg);
 
       const updateProfileData = {
@@ -35,7 +35,7 @@ const UserProfile = () => {
         photoURL: photoURL,
       };
 
-      console.log(updateProfileData);
+      // console.log(updateProfileData);
 
       //firebase profile update
       await updateUserProfile(updateProfileData);
