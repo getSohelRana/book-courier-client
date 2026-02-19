@@ -165,6 +165,8 @@ const AddBook = () => {
                 <option value="Romantic">Romantic</option>
                 <option value="Drama">Drama</option>
                 <option value="Fiction">Fiction</option>
+                <option value="Programming">Programming</option>
+                <option value="Others">Others</option>
               </select>
               {errors.category && (
                 <p className="text-error text-sm">{errors.category.message}</p>

@@ -34,8 +34,8 @@ const OrderModal = ({ closeModal, isOpen, book, refetchBook }) => {
       refetchBook();
     },
   });
-  const { _id, bookName, price, quantity} = book;
-
+  const { _id, bookName, price, quantity, addedBy} = book;
+// console.log(book)
   const {
     register,
     handleSubmit,
@@ -55,7 +55,7 @@ const OrderModal = ({ closeModal, isOpen, book, refetchBook }) => {
       address: data.address,
       rating: Number(data.rating),
       comment: data.comment,
-
+      addedBy : addedBy.email,
       orderStatus: "pending",
       paymentStatus: "unpaid",
       createdAt: new Date(),
