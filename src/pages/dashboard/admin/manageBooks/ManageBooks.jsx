@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 const ManageBooks = () => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
+
   // load all books data
   const { data: books = [], isLoading } = useQuery({
     queryKey: ["book-collection", user?.email],
@@ -65,6 +66,31 @@ const ManageBooks = () => {
       }
     });
   };
+
+  // publish status change mutation
+ const { mutate: changePublishStatus, isPending: updatingStatus } = useMutation(
+   {
+     mutationFn: async ({ id, publish }) => {
+       const res = await axios.patch(
+         `${import.meta.env.VITE_api_url}/book-publish/${id}`,
+         { publish },
+       );
+       return res.data;
+     },
+
+     onSuccess: () => {
+       queryClient.invalidateQueries({
+         queryKey: ["book-collection", user?.email],
+       });
+
+       Swal.fire("Updated!", "Publish status updated successfully.", "success");
+     },
+
+     onError: () => {
+       Swal.fire("Error!", "Status update failed!", "error");
+     },
+   },
+ );
 
   if (isLoading) return <Loading></Loading>;
   return (
@@ -123,10 +149,17 @@ const ManageBooks = () => {
                     </div>
                   </td>
                   <td>
-                    <select defaultValue="" className="select w-full">
-                      <option value="" disabled>
-                        Select status
-                      </option>
+                    <select
+                      value={book.publish}
+                      disabled={updatingStatus}
+                      onChange={(e) =>
+                        changePublishStatus({
+                          id: book._id,
+                          publish: e.target.value,
+                        })
+                      }
+                      className="select w-full"
+                    >
                       <option value="Published">Published</option>
                       <option value="Unpublished">Unpublished</option>
                     </select>
