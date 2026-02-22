@@ -14,6 +14,7 @@ import siteLogo from "../assets/book_qourier_logo2.png"
 import Container from "../components/shared/Container";
 import { GoBook } from "react-icons/go";
 import showToast from "../utilities/showToast/showToast";
+import { FaRegHeart } from "react-icons/fa";
 
 const DashboardLayout = () => {
   useEffect(() => {
@@ -160,7 +161,7 @@ const DashboardLayout = () => {
               </NavLink>
             </li>
 
-            {/* List item */}
+            {/* 1st links item */}
             <li>
               {/* user order link */}
               {user?.email && role === "user" && (
@@ -265,6 +266,19 @@ const DashboardLayout = () => {
                 >
                   <LiaCartArrowDownSolid />
                   <span className="is-drawer-close:hidden">My-orders</span>
+                </NavLink>
+              )}
+            </li>
+            <li>
+              {/* wish list page */}
+              {user?.email && role === "user" && (
+                <NavLink
+                  to="user/wishlist"
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="Wishlist"
+                >
+                  <FaRegHeart />
+                  <span className="is-drawer-close:hidden">Wishlist</span>
                 </NavLink>
               )}
             </li>

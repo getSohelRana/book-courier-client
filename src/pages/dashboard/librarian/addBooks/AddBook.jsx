@@ -305,7 +305,11 @@ const AddBook = () => {
             </div>
             {/* Submit button (full width) */}
             <div className="md:col-span-2">
-              <button type="submit" className="btn bg-secondary w-full mt-4">
+              <button
+                disabled={isPending}
+                type="submit"
+                className={`${isPending ? "bg-secondary/20" : "bg-secondary"} btn  w-full mt-4`}
+              >
                 {isPending ? "Adding Book to Library..." : "Add book"}
               </button>
             </div>

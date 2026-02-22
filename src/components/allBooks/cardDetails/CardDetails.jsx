@@ -1,20 +1,24 @@
 import { useParams } from "react-router";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import Loading from "../../shared/loading/Loading";
 import Container from "../../shared/Container";
 import { GoHeart } from "react-icons/go";
 import { useState } from "react";
 import OrderModal from "../../modal/paymentModal/OrderModal";
-import { FaStar } from "react-icons/fa";
+import { FaHeart, FaStar } from "react-icons/fa";
+import useAuth from "../../../hooks/useAuth";
+import showToast from "../../../utilities/showToast/showToast";
 
 const CardDetails = () => {
+  const { user } = useAuth();
   const queryClient = useQueryClient();
   let [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
+
   // book detail query
   const { data: book = {}, isLoading } = useQuery({
-    queryKey: ["orders", id],
+    queryKey: ["book-details", id],
     queryFn: async () => {
       const res = await axios(
         `${import.meta.env.VITE_api_url}/book-details/${id}`,
@@ -23,6 +27,24 @@ const CardDetails = () => {
     },
   });
   // console.log(book)
+
+  /* WISHLIST QUERY  */
+
+  const { data: wishlist = [] } = useQuery({
+    queryKey: ["wishlist", user?.email],
+    enabled: !!user?.email,
+    queryFn: async () => {
+      const res = await axios.get(
+        `${import.meta.env.VITE_api_url}/wishlist-details?email=${user.email}`,
+      );
+      return res.data;
+    },
+  });
+
+  const isWishlisted = wishlist.some(
+    (item) => item.bookId?.toString() === book?._id?.toString(),
+  );
+
   const {
     bookName,
     authorName,
@@ -49,6 +71,52 @@ const CardDetails = () => {
   });
   // console.log(reviews)
 
+  // add to wishlist
+
+  const { isPending, mutateAsync } = useMutation({
+    mutationFn: async (payload) => {
+      const res = await axios.post(
+        `${import.meta.env.VITE_api_url}/wishlist`,
+        payload,
+      );
+      return res.data;
+    },
+
+    onSuccess: (data) => {
+      if (data.insertedId) {
+        showToast("success", "Added to wishlist");
+        queryClient.invalidateQueries(["wishlist", user?.email]);
+      }
+    },
+
+    onError: (error) => {
+      showToast("error", error.response?.data?.message || "Failed to add book");
+    },
+  });
+
+  const handleWishlist = async () => {
+    try {
+      const wishlistData = {
+        bookId: book._id,
+        bookName,
+        authorName,
+        category,
+        description,
+        pages: Number(pages),
+        price: Number(price),
+        quantity: Number(quantity),
+        coverImg,
+        addedBy,
+        createdAt,
+        userEmail: user?.email,
+      };
+      console.log("wishlist btn clicked", id, wishlistData);
+      await mutateAsync(wishlistData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   if (isLoading) return <Loading></Loading>;
 
   return (
@@ -73,11 +141,14 @@ const CardDetails = () => {
                 <p className="text-sm text-secondary capitalize">
                   by {authorName}
                 </p>
+                {/* wishlist button */}
                 <button
+                  disabled={isPending}
+                  onClick={handleWishlist}
                   type="button"
-                  className="btn bg-transparent border-none outline-0 shadow-none text-2xl"
+                  className={`btn bg-transparent border-none outline-0 shadow-none text-2xl ${isWishlisted ? "text-red-500" : "text-gray-300"}`}
                 >
-                  <GoHeart></GoHeart>
+                  <FaHeart />
                 </button>
               </div>
               <p className="text-xl text-gray-600 mb-2 line-clamp-3 mt-3">
@@ -189,6 +260,6 @@ const CardDetails = () => {
       </div>
     </Container>
   );
-};;
+};
 
 export default CardDetails;

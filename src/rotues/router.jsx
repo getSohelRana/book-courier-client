@@ -27,6 +27,7 @@ import Payment from "../pages/dashboard/payment/Payment";
 import PaymentSuccess from "../pages/dashboard/payment/paymentSuccess";
 import PaymentCancelled from "../pages/dashboard/payment/PaymentCancelled";
 import MyBooksEdit from "../pages/dashboard/librarian/myBooks/MyBooksEdit";
+import WishList from "../pages/dashboard/user/wishlist/WishList";
 
 const Router = createBrowserRouter([
   {
@@ -98,8 +99,8 @@ const Router = createBrowserRouter([
         element: <PaymentSuccess></PaymentSuccess>,
       },
       {
-        path : "my-books/:id",
-        element : <MyBooksEdit></MyBooksEdit>
+        path: "my-books/:id",
+        element: <MyBooksEdit></MyBooksEdit>,
       },
       {
         path: "payment-cancelled",
@@ -130,6 +131,7 @@ const Router = createBrowserRouter([
           { path: "orders", element: <UserOrder></UserOrder> },
           { path: "invoices", element: <Invoices></Invoices> },
           { path: "profile", element: <UserProfile></UserProfile> },
+          { path: "wishlist", element: <WishList></WishList> },
         ],
       },
     ],
