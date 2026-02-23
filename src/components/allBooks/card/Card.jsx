@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 
 const Card = ({ allBook }) => {
   // console.log(allBook)
-  const { _id, bookName, coverImg } = allBook || {};
+  const { _id, bookName, coverImg, price, category } = allBook || {};
   return (
     <Link to={`/book-details/${_id}`}>
       <div className="card bg-base-300 image-full shadow-sm">
@@ -16,6 +16,10 @@ const Card = ({ allBook }) => {
         </figure>
         <div className="card-body">
           <h2 className="card-title uppercase">{bookName}</h2>
+          <div className='flex gap-2 items-center '>
+            <p>Price : {price}</p>
+            <p>Category : {category}</p>
+          </div>
         </div>
       </div>
     </Link>
