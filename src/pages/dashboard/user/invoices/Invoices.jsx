@@ -46,6 +46,7 @@ const Invoices = () => {
   return (
     <Container>
       <div className="max-w-7xl mx-auto my-10 px-4">
+        <title>Payment history</title>
         <h2 className="text-xl font-bold mb-4">Your Payment History</h2>
         <div className="overflow-x-auto">
           <table className="table w-full">

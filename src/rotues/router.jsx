@@ -28,6 +28,7 @@ import PaymentSuccess from "../pages/dashboard/payment/paymentSuccess";
 import PaymentCancelled from "../pages/dashboard/payment/PaymentCancelled";
 import MyBooksEdit from "../pages/dashboard/librarian/myBooks/MyBooksEdit";
 import WishList from "../pages/dashboard/user/wishlist/WishList";
+import DashboardRedirect from "../pages/dashboard/DashboardRedirect";
 
 const Router = createBrowserRouter([
   {
@@ -90,6 +91,10 @@ const Router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
+      {
+        index : true,
+        element : <DashboardRedirect></DashboardRedirect>
+      },
       {
         path: "payment/:id",
         element: <Payment></Payment>,

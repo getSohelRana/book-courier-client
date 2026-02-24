@@ -72,6 +72,7 @@ const UserProfile = () => {
 
   return (
     <div className="max-w-5xl mx-auto mt-6 md:mt-10 px-4">
+      <title>My profile</title>
       <h2 className="text-xl md:text-2xl font-bold my-6 md:my-10">
         My Profile
       </h2>

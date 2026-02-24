@@ -64,6 +64,7 @@ const UserOrder = () => {
   return (
     <Container>
       <div className="max-w-5xl mx-auto my-10 px-4">
+        <title>My orders</title>
         <h2 className="text-xl font-bold mb-4">Your Orders {orders.length}</h2>
         <div className="overflow-x-auto">
           <table className="table w-full">

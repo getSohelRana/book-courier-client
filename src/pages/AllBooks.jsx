@@ -13,7 +13,6 @@ const AllBooks = () => {
   const {
     data: allBooks = [],
     isLoading,
-    isFetching,
   } = useQuery({
     queryKey: ["all-books", search, sort],
     queryFn: async () => {
