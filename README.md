@@ -1,16 +1,132 @@
-# React + Vite
+# Book Courier
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Project Name:  BookCourier – Library-to-Home Delivery System
 
-Currently, two official plugins are available:
+Project Overview & Discussion
+BookCourier is a library delivery management system where users can request book pickup or delivery from their nearby libraries. The system helps students, researchers, and readers borrow and return books without physically visiting the library.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## React Compiler
+🔗 **Live Client:** https://book-courier365.netlify.app/
+🔗 **Live Server:** https://book-courier-server-khaki.vercel.app/
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+------------------------------------------------------------------------
 
-## Expanding the ESLint configuration
+##  Technologies Used
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Frontend
+
+-   React 19
+-   React Router 7
+-   React Hook Form
+-   TanStack React Query
+-   Axios
+-   Tailwind CSS 4
+-   DaisyUI
+-   Headless UI
+-   SweetAlert2
+-   Swiper
+-   React Leaflet
+-   Firebase
+
+### Backend
+
+-   Express 5
+-   MongoDB
+-   NanoID
+-   Stripe
+-   CORS
+-   Dotenv
+
+------------------------------------------------------------------------
+
+## 📦 Installation Guide
+
+### 1️⃣ Clone Repository
+
+``` bash
+git clone https://github.com/getSohelRana/book-courier-client
+cd book-courier
+```
+
+------------------------------------------------------------------------
+
+### 2️⃣ Setup Frontend
+
+``` bash
+cd client
+npm install
+```
+
+Create `.env` file:
+
+    VITE_API_URL=https://book-courier-server-khaki.vercel.app/
+
+Run frontend:
+
+``` bash
+npm run dev
+```
+
+------------------------------------------------------------------------
+
+### 3️⃣ Setup Backend
+
+``` bash
+cd server
+npm install
+```
+
+Create `.env` file:
+
+    PORT=5000
+    MONGO_URI=your_mongodb_connection_string
+    STRIPE_SECRET_KEY=your_stripe_secret_key
+
+Run backend:
+
+``` bash
+npm run start
+```
+
+------------------------------------------------------------------------
+
+## ✨ Features
+
+-   User Authentication
+-   Courier Booking System
+-   Admin Dashboard
+-   Librarian Role Management
+-   Stripe Payment Integration
+-   Publish / Unpublish System
+-   Order Management
+-   Responsive Design
+-   Interactive Maps
+-   Modern UI with Tailwind & DaisyUI
+
+------------------------------------------------------------------------
+
+## 🧪 Example API Routes
+
+Base URL:
+
+    https://book-courier-server-khaki.vercel.app/
+
+  Method   Route                    Description
+  -------- ------------------------ ----------------
+  GET      /books                   Get all books
+  POST     /books                   Add book
+  PATCH    /books/:id               Update book
+  DELETE   /books/:id               Delete book
+  POST     /create-payment-intent   Stripe payment
+
+------------------------------------------------------------------------
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+------------------------------------------------------------------------
+
+## 👨‍💻 Author
+
+Developed with ❤️ by Book Courier Team
